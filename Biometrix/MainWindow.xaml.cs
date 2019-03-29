@@ -24,5 +24,12 @@ namespace Biometrix
         {
             InitializeComponent();
         }
+
+        private void CloseAppMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Czy chcesz zamknąć pracę z aplikacją?", "Zakończ", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+                Application.Current.Shutdown();
+        }
     }
 }

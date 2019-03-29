@@ -13,7 +13,7 @@
                 <MenuItem Header="Otwórz obraz"/>
                 <MenuItem Header="Zapisz obraz" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem Header="Zakończ"/>
+                <MenuItem Name="CloseAppMenuItem" Header="Zakończ" Click="CloseAppMenuItem_Click"/>
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">

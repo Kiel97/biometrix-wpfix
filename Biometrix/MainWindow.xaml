@@ -5,11 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Biometrix"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Biometrix" Height="450" Width="800">
     <DockPanel>
-        <Button DockPanel.Dock="Top">MenuBar</Button>
-        <Button DockPanel.Dock="Bottom">StatusBar</Button>
-        <Button DockPanel.Dock="Right" MinWidth="120">Tools</Button>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Plik">
+                <MenuItem Header="Otwórz obraz"/>
+                <MenuItem Header="Zapisz obraz" IsEnabled="False"/>
+                <Separator/>
+                <MenuItem Header="Zakończ"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>Gotowe</StatusBarItem>
+        </StatusBar>
+        <StackPanel DockPanel.Dock="Right" Background="#F5F5F5" MinWidth="120">
+            <GroupBox>
+                <GroupBox.Header>
+                    <CheckBox>Malowanie</CheckBox>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Margin="2" Padding="3">Red:</Label>
+                    <Label Grid.Row="1" Grid.Column="0" Margin="2" Padding="3">Green:</Label>
+                    <Label Grid.Row="2" Grid.Column="0" Margin="2" Padding="3">Blue:</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Padding="3">255</TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Padding="3">255</TextBox>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="2" Padding="3">255</TextBox>
+                    <Label Grid.Row="3" Grid.ColumnSpan="2" Margin="2" Padding="3" Background="White" BorderBrush="DarkGray" BorderThickness="1" MinHeight="25"></Label>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

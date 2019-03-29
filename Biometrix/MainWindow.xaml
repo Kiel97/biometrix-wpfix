@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Biometrix"
         mc:Ignorable="d"
         Title="Biometrix" Height="450" Width="800">
@@ -37,10 +38,11 @@
                     <Label Grid.Row="0" Grid.Column="0" Margin="2" Padding="3">Red:</Label>
                     <Label Grid.Row="1" Grid.Column="0" Margin="2" Padding="3">Green:</Label>
                     <Label Grid.Row="2" Grid.Column="0" Margin="2" Padding="3">Blue:</Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Padding="3">255</TextBox>
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Padding="3">255</TextBox>
-                    <TextBox Grid.Row="2" Grid.Column="1" Margin="2" Padding="3">255</TextBox>
-                    <Label Grid.Row="3" Grid.ColumnSpan="2" Margin="2" Padding="3" Background="White" BorderBrush="DarkGray" BorderThickness="1" MinHeight="25"></Label>
+                    <xctk:IntegerUpDown Grid.Row="0" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" Minimum="0" Maximum="255" Increment="1"></xctk:IntegerUpDown>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" Minimum="0" Maximum="255" Increment="1"></xctk:IntegerUpDown>
+                    <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" Minimum="0" Maximum="255" Increment="1"></xctk:IntegerUpDown>
+                    <Label Grid.Row="3" Grid.Column="0" Margin="2" Padding="3">Kolor:</Label>
+                    <Label Grid.Row="3" Grid.Column="1" Margin="2" Padding="3" Background="White" BorderBrush="DarkGray" BorderThickness="1" MinHeight="25"></Label>
                 </Grid>
             </GroupBox>
         </StackPanel>

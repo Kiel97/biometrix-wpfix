@@ -6,7 +6,15 @@
         xmlns:local="clr-namespace:Biometrix"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <Button DockPanel.Dock="Top">MenuBar</Button>
+        <Button DockPanel.Dock="Bottom">StatusBar</Button>
+        <Button DockPanel.Dock="Right" MinWidth="120">Tools</Button>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </DockPanel>
 </Window>

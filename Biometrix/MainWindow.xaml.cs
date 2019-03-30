@@ -51,7 +51,10 @@ namespace Biometrix
                 OriginalImage.Source = new BitmapImage(new Uri(dialog.FileName));
                 ModifiedImage.Source = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
 
-                Title = "Biometrix - " + dialog.FileName;
+                int imageWidth = (int)OriginalImage.Source.Width;
+                int imageHeight = (int)OriginalImage.Source.Height;
+
+                Title = "Biometrix - " + dialog.FileName + " (" + imageWidth + "x" + imageHeight + ")";
             }
         }
 

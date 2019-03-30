@@ -51,8 +51,18 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Name="OriginalImage" Grid.Column="0" Margin="5"></Image>
-            <Image Name="ModifiedImage" Grid.Column="1" Margin="5"></Image>
+            <DockPanel Grid.Column="0" Margin="2" Background="#FCFCFC">
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Oryginalny obraz:</Label>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Image Name="OriginalImage" Margin="5" Stretch="None"></Image>
+                </ScrollViewer>
+            </DockPanel>
+            <DockPanel Grid.Column="1" Margin="2" Background="#FCFCFC">
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Zmodyfikowany obraz:</Label>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Image Name="ModifiedImage" Margin="5" Stretch="None"></Image>
+                </ScrollViewer>
+            </DockPanel>
         </Grid>
     </DockPanel>
 </Window>

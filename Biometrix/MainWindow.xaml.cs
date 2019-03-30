@@ -54,7 +54,7 @@ namespace Biometrix
                 int imageWidth = (int)OriginalImage.Source.Width;
                 int imageHeight = (int)OriginalImage.Source.Height;
 
-                Title = "Biometrix - " + dialog.FileName + " (" + imageWidth + "x" + imageHeight + ")";
+                Title = $"Biometrix - {dialog.FileName} ({imageWidth}x{imageHeight})";
             }
         }
 

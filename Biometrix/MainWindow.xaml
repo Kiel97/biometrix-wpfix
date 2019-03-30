@@ -10,7 +10,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Plik">
-                <MenuItem Header="Otwórz obraz"/>
+                <MenuItem Name="OpenImageMenuItem" Header="Otwórz obraz" Click="OpenImageMenuItem_Click"/>
                 <MenuItem Header="Zapisz obraz" IsEnabled="False"/>
                 <Separator/>
                 <MenuItem Name="CloseAppMenuItem" Header="Zakończ" Click="CloseAppMenuItem_Click"/>

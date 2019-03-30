@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace Biometrix
 {
@@ -30,6 +31,25 @@ namespace Biometrix
             MessageBoxResult result = MessageBox.Show("Czy chcesz zamknąć pracę z aplikacją?", "Zakończ", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
                 Application.Current.Shutdown();
+        }
+
+        private void OpenImageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            String filter = "Pliki JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg" + 
+                            "|Pliki PNG (*.png)|*.png" + 
+                            "|Pliki GIF (*.gif)|*.gif" + 
+                            "|Pliki BMP (*.bmp)|*.bmp" + 
+                            "|Pliki TIFF (*.tif;*.tiff)|*.tif;*.tiff|" +
+                            "Wszystkie wspierane (*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.tif;*.tiff)|*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.tif;*.tiff|" + 
+                            "Wszystkie pliki (*.*)|*.*";
+            dialog.Filter = filter;
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            bool result = (bool)dialog.ShowDialog();
+            if (result)
+                Console.WriteLine(dialog.FileName);
+            else
+                Console.WriteLine("Anulowano ładowanie obrazka");
         }
     }
 }

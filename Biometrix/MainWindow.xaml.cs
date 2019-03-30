@@ -47,9 +47,12 @@ namespace Biometrix
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             bool result = (bool)dialog.ShowDialog();
             if (result)
-                Console.WriteLine(dialog.FileName);
-            else
-                Console.WriteLine("Anulowano ładowanie obrazka");
+            {
+                OriginalImage.Source = new BitmapImage(new Uri(dialog.FileName));
+                ModifiedImage.Source = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+
+                Title = "Biometrix - " + dialog.FileName;
+            }
         }
 
         private void SpinValueRGB_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

@@ -51,6 +51,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Image Name="OriginalImage" Grid.Column="0" Margin="5"></Image>
+            <Image Name="ModifiedImage" Grid.Column="1" Margin="5"></Image>
         </Grid>
     </DockPanel>
 </Window>

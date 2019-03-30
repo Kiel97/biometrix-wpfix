@@ -69,5 +69,15 @@ namespace Biometrix
                 Console.WriteLine(ex);
             }
         }
+
+        private void ZoomOriginalSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ZoomOriginalLabel.Content = $"{ZoomOriginalSlider.Value}00%";
+        }
+
+        private void ZoomModifiedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ZoomModifiedLabel.Content = $"{ZoomModifiedSlider.Value}00%";
+        }
     }
 }

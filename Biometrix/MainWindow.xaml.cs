@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,7 +76,31 @@ namespace Biometrix
             if (result)
             {
                 string extension = System.IO.Path.GetExtension(dialog.FileName);
-                Console.WriteLine(extension);
+                FileStream saveStream = new FileStream(dialog.FileName, FileMode.Create);
+
+                switch (extension)
+                {
+                    case ".jpeg":
+                        JpegBitmapEncoder jpegEncoder = new JpegBitmapEncoder();
+                        jpegEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
+                        jpegEncoder.Save(saveStream);
+                        break;
+                    case ".png":
+                        PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
+                        break;
+                    case ".gif":
+                        GifBitmapEncoder gifEncoder = new GifBitmapEncoder();
+                        break;
+                    case ".bmp":
+                        BmpBitmapEncoder bmpEncoder = new BmpBitmapEncoder();
+                        break;
+                    case ".tiff":
+                        TiffBitmapEncoder tiffEncoder = new TiffBitmapEncoder();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(extension);
+                }
+                saveStream.Close();
 
                 ImageStatusBarItem.Content = $"Pomyślnie zapisano modyfikacje do pliku {dialog.FileName}";
             }

@@ -26,7 +26,8 @@ namespace Biometrix
         private WriteableBitmap modifiedBitmap;
         private int stride;
         private int bytesPerPixel;
-        byte[] pixels;
+        byte[] originalPixels;
+        byte[] modifiedPixels;
 
         public MainWindow()
         {
@@ -68,9 +69,11 @@ namespace Biometrix
 
                 bytesPerPixel = originalBitmap.Format.BitsPerPixel / 8;
                 stride = imageWidth * bytesPerPixel;
-                pixels = new byte[stride * imageHeight];
+                originalPixels = new byte[stride * imageHeight];
+                modifiedPixels = new byte[stride * imageHeight];
 
-                originalBitmap.CopyPixels(pixels, stride, 0);
+                originalBitmap.CopyPixels(originalPixels, stride, 0);
+                modifiedBitmap.CopyPixels(modifiedPixels, stride, 0);
 
                 SaveImageMenuItem.IsEnabled = true;
             }
@@ -174,23 +177,34 @@ namespace Biometrix
 
         private void OriginalImage_MouseMove(object sender, MouseEventArgs e)
         {
+            //FIXME: x i y nie mogą być większe/równe wymiarom obrazka
             Point p = e.GetPosition(OriginalImage);
             int x = (int)p.X;
             int y = (int)p.Y;
 
             int index = x * bytesPerPixel + y * stride;
 
-            int rValue = pixels[index + 2];
-            int gValue = pixels[index + 1];
-            int bValue = pixels[index];
+            int rValue = originalPixels[index + 2];
+            int gValue = originalPixels[index + 1];
+            int bValue = originalPixels[index];
 
-            ImageStatusBarItem.Content = $"({x},{y}) - R:{rValue}, G:{gValue}, B:{bValue}";
+            ImageStatusBarItem.Content = $"Oryginał: ({x},{y}) - R:{rValue}, G:{gValue}, B:{bValue}";
         }
 
         private void ModifiedImage_MouseMove(object sender, MouseEventArgs e)
         {
+            //FIXME: x i y nie mogą być większe/równe wymiarom obrazka
             Point p = e.GetPosition(ModifiedImage);
-            ImageStatusBarItem.Content = $"({(int)p.X},{(int)p.Y})";
+            int x = (int)p.X;
+            int y = (int)p.Y;
+
+            int index = x * bytesPerPixel + y * stride;
+
+            int rValue = modifiedPixels[index + 2];
+            int gValue = modifiedPixels[index + 1];
+            int bValue = modifiedPixels[index];
+
+            ImageStatusBarItem.Content = $"Modyfikacja: ({x},{y}) - R:{rValue}, G:{gValue}, B:{bValue}";
         }
     }
 }

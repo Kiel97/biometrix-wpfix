@@ -221,5 +221,29 @@ namespace Biometrix
         {
             isDrawing = false;
         }
+
+        private void OriginalImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Point p = e.GetPosition(OriginalImage);
+            int x = (int)p.X;
+            int y = (int)p.Y;
+
+            int index = x * bytesPerPixel + y * stride;
+            SpinValueR.Value = originalPixels[index + 2];
+            SpinValueG.Value = originalPixels[index + 1];
+            SpinValueB.Value = originalPixels[index];
+        }
+
+        private void ModifiedImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Point p = e.GetPosition(ModifiedImage);
+            int x = (int)p.X;
+            int y = (int)p.Y;
+
+            int index = x * bytesPerPixel + y * stride;
+            SpinValueR.Value = originalPixels[index + 2];
+            SpinValueG.Value = originalPixels[index + 1];
+            SpinValueB.Value = originalPixels[index];
+        }
     }
 }

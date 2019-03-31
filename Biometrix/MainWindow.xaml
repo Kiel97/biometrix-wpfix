@@ -59,7 +59,7 @@
                     <Slider Name="ZoomOriginalSlider" Minimum="1" Maximum="8" TickFrequency="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Ticks="1,2,4,8" ValueChanged="ZoomOriginalSlider_ValueChanged"></Slider>
                 </DockPanel>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <Image Name="OriginalImage" Margin="5" Stretch="None" MouseMove="OriginalImage_MouseMove">
+                    <Image Name="OriginalImage" Margin="5" Stretch="None" MouseMove="OriginalImage_MouseMove" MouseRightButtonDown="OriginalImage_MouseRightButtonDown">
                         <Image.LayoutTransform>
                             <ScaleTransform></ScaleTransform>
                         </Image.LayoutTransform>
@@ -74,7 +74,7 @@
                     <Slider Name="ZoomModifiedSlider" Minimum="1" Maximum="8" TickFrequency="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Ticks="1,2,4,8" ValueChanged="ZoomModifiedSlider_ValueChanged"></Slider>
                 </DockPanel>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <Image Name="ModifiedImage" Margin="5" Stretch="None" MouseMove="ModifiedImage_MouseMove" MouseLeftButtonDown="ModifiedImage_MouseLeftButtonDown" MouseLeftButtonUp="ModifiedImage_MouseLeftButtonUp">
+                    <Image Name="ModifiedImage" Margin="5" Stretch="None" MouseMove="ModifiedImage_MouseMove" MouseLeftButtonDown="ModifiedImage_MouseLeftButtonDown" MouseLeftButtonUp="ModifiedImage_MouseLeftButtonUp" MouseRightButtonDown="ModifiedImage_MouseRightButtonDown">
                         <Image.LayoutTransform>
                             <ScaleTransform></ScaleTransform>
                         </Image.LayoutTransform>

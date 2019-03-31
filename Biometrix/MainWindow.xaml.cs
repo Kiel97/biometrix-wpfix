@@ -87,6 +87,16 @@ namespace Biometrix
 
         private void ZoomModifiedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            try
+            {
+                ScaleTransform st = (ScaleTransform)ModifiedImage.LayoutTransform;
+                st.ScaleX = ZoomModifiedSlider.Value;
+                st.ScaleY = ZoomModifiedSlider.Value;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             ZoomModifiedLabel.Content = $"{ZoomModifiedSlider.Value}00%";
         }
     }

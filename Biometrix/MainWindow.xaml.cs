@@ -143,32 +143,27 @@ namespace Biometrix
 
         private void ZoomOriginalSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            try
-            {
-                ScaleTransform st = (ScaleTransform)OriginalImage.LayoutTransform;
-                st.ScaleX = ZoomOriginalSlider.Value;
-                st.ScaleY = ZoomOriginalSlider.Value;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            ZoomOriginalLabel.Content = $"{ZoomOriginalSlider.Value}00%";
+            ScaleImage(OriginalImage, ZoomOriginalSlider, ZoomOriginalLabel);
         }
 
         private void ZoomModifiedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            ScaleImage(ModifiedImage, ZoomModifiedSlider, ZoomModifiedLabel);
+        }
+
+        private void ScaleImage(Image image, Slider zoomSlider, Label zoomLabel)
+        {
             try
             {
-                ScaleTransform st = (ScaleTransform)ModifiedImage.LayoutTransform;
-                st.ScaleX = ZoomModifiedSlider.Value;
-                st.ScaleY = ZoomModifiedSlider.Value;
+                ScaleTransform st = (ScaleTransform)image.LayoutTransform;
+                st.ScaleX = zoomSlider.Value;
+                st.ScaleY = zoomSlider.Value;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-            ZoomModifiedLabel.Content = $"{ZoomModifiedSlider.Value}00%";
+            zoomLabel.Content = $"{zoomSlider.Value}00%";
         }
 
         private void OriginalImage_MouseMove(object sender, MouseEventArgs e)

@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Biometrix"
         mc:Ignorable="d"
-        Title="Biometrix" Height="450" Width="800">
+        Title="Biometrix" Height="450" Width="800" Closing="Window_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Plik">

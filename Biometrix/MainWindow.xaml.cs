@@ -45,9 +45,7 @@ namespace Biometrix
 
         private void CloseAppMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Czy chcesz zakończyć pracę z aplikacją?", "Zakończ", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-                Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         private void OpenImageMenuItem_Click(object sender, RoutedEventArgs e)

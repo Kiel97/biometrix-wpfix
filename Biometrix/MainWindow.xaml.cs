@@ -22,6 +22,9 @@ namespace Biometrix
     /// </summary>
     public partial class MainWindow : Window
     {
+        private WriteableBitmap originalBitmap;
+        private WriteableBitmap modifiedBitmap;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,8 +52,11 @@ namespace Biometrix
             bool result = (bool)dialog.ShowDialog();
             if (result)
             {
-                OriginalImage.Source = new BitmapImage(new Uri(dialog.FileName));
-                ModifiedImage.Source = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+                originalBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+                modifiedBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+
+                OriginalImage.Source = originalBitmap;
+                ModifiedImage.Source = modifiedBitmap;
 
                 int imageWidth = (int)OriginalImage.Source.Width;
                 int imageHeight = (int)OriginalImage.Source.Height;

@@ -96,36 +96,30 @@ namespace Biometrix
                 string extension = System.IO.Path.GetExtension(dialog.FileName);
                 FileStream saveStream = new FileStream(dialog.FileName, FileMode.Create);
 
+                BitmapEncoder encoder = null;
+
                 switch (extension)
                 {
                     case ".jpeg":
-                        JpegBitmapEncoder jpegEncoder = new JpegBitmapEncoder();
-                        jpegEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
-                        jpegEncoder.Save(saveStream);
+                        encoder = new JpegBitmapEncoder();
                         break;
                     case ".png":
-                        PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
-                        pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
-                        pngEncoder.Save(saveStream);
+                        encoder = new PngBitmapEncoder();
                         break;
                     case ".gif":
-                        GifBitmapEncoder gifEncoder = new GifBitmapEncoder();
-                        gifEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
-                        gifEncoder.Save(saveStream);
+                        encoder = new GifBitmapEncoder();
                         break;
                     case ".bmp":
-                        BmpBitmapEncoder bmpEncoder = new BmpBitmapEncoder();
-                        bmpEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
-                        bmpEncoder.Save(saveStream);
+                        encoder = new BmpBitmapEncoder();
                         break;
                     case ".tiff":
-                        TiffBitmapEncoder tiffEncoder = new TiffBitmapEncoder();
-                        tiffEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
-                        tiffEncoder.Save(saveStream);
+                        encoder = new TiffBitmapEncoder();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(extension);
                 }
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
+                encoder.Save(saveStream);
                 saveStream.Close();
 
                 ImageStatusBarItem.Content = $"Pomyślnie zapisano modyfikacje do pliku {dialog.FileName}";

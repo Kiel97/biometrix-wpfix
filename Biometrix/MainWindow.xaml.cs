@@ -87,15 +87,23 @@ namespace Biometrix
                         break;
                     case ".png":
                         PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
+                        pngEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
+                        pngEncoder.Save(saveStream);
                         break;
                     case ".gif":
                         GifBitmapEncoder gifEncoder = new GifBitmapEncoder();
+                        gifEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
+                        gifEncoder.Save(saveStream);
                         break;
                     case ".bmp":
                         BmpBitmapEncoder bmpEncoder = new BmpBitmapEncoder();
+                        bmpEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
+                        bmpEncoder.Save(saveStream);
                         break;
                     case ".tiff":
                         TiffBitmapEncoder tiffEncoder = new TiffBitmapEncoder();
+                        tiffEncoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
+                        tiffEncoder.Save(saveStream);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(extension);

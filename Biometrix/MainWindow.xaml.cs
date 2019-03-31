@@ -29,6 +29,8 @@ namespace Biometrix
         byte[] originalPixels;
         byte[] modifiedPixels;
 
+        bool isDrawing = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -199,6 +201,25 @@ namespace Biometrix
             int bValue = modifiedPixels[index];
 
             ImageStatusBarItem.Content = $"Modyfikacja: ({x},{y}) - R:{rValue}, G:{gValue}, B:{bValue}";
+
+            if (IsDrawingCheckBox.IsChecked == true && isDrawing)
+            {
+                modifiedPixels[index + 2] = (byte)SpinValueR.Value;
+                modifiedPixels[index + 1] = (byte)SpinValueG.Value;
+                modifiedPixels[index]     = (byte)SpinValueB.Value;
+
+                modifiedBitmap.WritePixels(new Int32Rect(0, 0, (int)modifiedBitmap.Width, (int)modifiedBitmap.Height), modifiedPixels, stride, 0);
+            }
+        }
+
+        private void ModifiedImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            isDrawing = true;
+        }
+
+        private void ModifiedImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            isDrawing = false;
         }
     }
 }

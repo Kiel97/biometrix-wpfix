@@ -99,5 +99,17 @@ namespace Biometrix
             }
             ZoomModifiedLabel.Content = $"{ZoomModifiedSlider.Value}00%";
         }
+
+        private void OriginalImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point p = e.GetPosition(OriginalImage);
+            ImageStatusBarItem.Content = $"({(int)p.X},{(int)p.Y})";
+        }
+
+        private void ModifiedImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point p = e.GetPosition(ModifiedImage);
+            ImageStatusBarItem.Content = $"({(int)p.X},{(int)p.Y})";
+        }
     }
 }

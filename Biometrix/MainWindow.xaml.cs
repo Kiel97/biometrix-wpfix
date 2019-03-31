@@ -24,6 +24,9 @@ namespace Biometrix
     {
         private WriteableBitmap originalBitmap;
         private WriteableBitmap modifiedBitmap;
+        private int stride;
+        private int bytesPerPixel;
+        byte[] pixels;
 
         public MainWindow()
         {
@@ -62,6 +65,12 @@ namespace Biometrix
                 int imageHeight = (int)OriginalImage.Source.Height;
 
                 Title = $"Biometrix - {dialog.FileName} ({imageWidth}x{imageHeight})";
+
+                bytesPerPixel = originalBitmap.Format.BitsPerPixel / 8;
+                stride = imageWidth * bytesPerPixel;
+                pixels = new byte[stride * imageHeight];
+
+                originalBitmap.CopyPixels(pixels, stride, 0);
 
                 SaveImageMenuItem.IsEnabled = true;
             }
@@ -166,7 +175,16 @@ namespace Biometrix
         private void OriginalImage_MouseMove(object sender, MouseEventArgs e)
         {
             Point p = e.GetPosition(OriginalImage);
-            ImageStatusBarItem.Content = $"({(int)p.X},{(int)p.Y})";
+            int x = (int)p.X;
+            int y = (int)p.Y;
+
+            int index = x * bytesPerPixel + y * stride;
+
+            int rValue = pixels[index + 2];
+            int gValue = pixels[index + 1];
+            int bValue = pixels[index];
+
+            ImageStatusBarItem.Content = $"({x},{y}) - R:{rValue}, G:{gValue}, B:{bValue}";
         }
 
         private void ModifiedImage_MouseMove(object sender, MouseEventArgs e)

@@ -55,8 +55,32 @@ namespace Biometrix
                 int imageHeight = (int)OriginalImage.Source.Height;
 
                 Title = $"Biometrix - {dialog.FileName} ({imageWidth}x{imageHeight})";
+
+                SaveImageMenuItem.IsEnabled = true;
             }
         }
+
+
+        private void SaveImageMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            String filter = "Plik JPEG (*.jpeg)|*.jpeg" +
+                            "|Plik PNG (*.png)|*.png" +
+                            "|Plik GIF (*.gif)|*.gif" +
+                            "|Plik BMP (*.bmp)|*.bmp" +
+                            "|Plik TIFF (*.tiff)|*.tiff";
+            dialog.Filter = filter;
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            bool result = (bool)dialog.ShowDialog();
+            if (result)
+            {
+                string extension = System.IO.Path.GetExtension(dialog.FileName);
+                Console.WriteLine(extension);
+
+                ImageStatusBarItem.Content = $"Pomyślnie zapisano modyfikacje do pliku {dialog.FileName}";
+            }
+        }
+
 
         private void SpinValueRGB_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {

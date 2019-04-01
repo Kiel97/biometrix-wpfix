@@ -37,6 +37,7 @@ namespace Biometrix
         {
             pixels = imagePixels;
             InitializeComponent();
+            HistogramChart.DisplayHistogram(histogram);
         }
 
         private void ValuesRadioBtn_Checked(object sender, RoutedEventArgs e)
@@ -62,6 +63,15 @@ namespace Biometrix
             }
 
             histogram = getHistogramFromByteArray(pixels);
+
+            try
+            {
+                HistogramChart.DisplayHistogram(histogram);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private int[] getHistogramFromByteArray(byte[] pixels)

@@ -15,8 +15,6 @@
                 <RadioButton Name="BlueValuesRadioBtn" Margin="3" Checked="ValuesRadioBtn_Checked">Niebieskie</RadioButton>
             </StackPanel>
         </GroupBox>
-        <Image Margin="5">
-            
-        </Image>
+        <local:HistogramColumnChart x:Name="HistogramChart" Margin="5"/>
     </DockPanel>
 </Window>

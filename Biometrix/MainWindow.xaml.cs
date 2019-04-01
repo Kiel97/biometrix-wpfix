@@ -83,6 +83,7 @@ namespace Biometrix
                 modifiedBitmap.CopyPixels(modifiedPixels, stride, 0);
 
                 SaveImageMenuItem.IsEnabled = true;
+                ShowHistogramBtn.IsEnabled = true;
             }
         }
 

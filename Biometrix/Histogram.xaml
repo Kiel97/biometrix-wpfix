@@ -15,8 +15,8 @@
                 <RadioButton Name="BlueValuesRadioBtn" Margin="3" Checked="ValuesRadioBtn_Checked">Niebieskie</RadioButton>
             </StackPanel>
         </GroupBox>
-        <Image Margin="5">
+        <local:BasicColumn Margin="5">
             
-        </Image>
+        </local:BasicColumn>
     </DockPanel>
 </Window>

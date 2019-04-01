@@ -40,21 +40,24 @@ namespace Biometrix
 
         private void ValuesRadioBtn_Checked(object sender, RoutedEventArgs e)
         {
-            if (AveragedValuesRadioBtn.IsChecked == true)
+            RadioButton radioButton = sender as RadioButton;
+
+            switch (radioButton.Name)
             {
-                colorMode = HistogramColorMode.GRAYSCALE;
-            }
-            else if (RedValuesRadioBtn.IsChecked == true)
-            {
-                colorMode = HistogramColorMode.RED;
-            }
-            else if (GreenValuesRadioBtn.IsChecked == true)
-            {
-                colorMode = HistogramColorMode.GREEN;
-            }
-            else if (BlueValuesRadioBtn.IsChecked == true)
-            {
-                colorMode = HistogramColorMode.BLUE;
+                case "AveragedValuesRadioBtn":
+                    colorMode = HistogramColorMode.GRAYSCALE;
+                    break;
+                case "RedValuesRadioBtn":
+                    colorMode = HistogramColorMode.RED;
+                    break;
+                case "GreenValuesRadioBtn":
+                    colorMode = HistogramColorMode.GREEN;
+                    break;
+                case "BlueValuesRadioBtn":
+                    colorMode = HistogramColorMode.BLUE;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

@@ -24,8 +24,9 @@ namespace Biometrix
             GRAYSCALE, RED, GREEN, BLUE
         }
 
-        private byte[] pixels;
         private HistogramColorMode colorMode;
+        private byte[] pixels;
+        private int[] histogram;
 
         public Histogram()
         {
@@ -34,8 +35,8 @@ namespace Biometrix
 
         public Histogram(byte[] imagePixels)
         {
-            InitializeComponent();
             pixels = imagePixels;
+            InitializeComponent();
         }
 
         private void ValuesRadioBtn_Checked(object sender, RoutedEventArgs e)
@@ -59,6 +60,37 @@ namespace Biometrix
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            histogram = getHistogramFromByteArray(pixels);
+        }
+
+        private int[] getHistogramFromByteArray(byte[] pixels)
+        {
+            int[] histogram = new int[256];
+
+            for (int j = 0; j < pixels.Length / 4; j += 4)
+            {
+                int value;
+                switch (colorMode)
+                {
+                    case HistogramColorMode.RED:
+                        value = pixels[j + 2];
+                        break;
+                    case HistogramColorMode.GREEN:
+                        value = pixels[j + 1];
+                        break;
+                    case HistogramColorMode.BLUE:
+                        value = pixels[j];
+                        break;
+                    case HistogramColorMode.GRAYSCALE:
+                        value = (int)(pixels[j + 2] + pixels[j + 1] + pixels[j]) / 3;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                histogram[value] += 1;
+            }
+            return histogram;
         }
     }
 }

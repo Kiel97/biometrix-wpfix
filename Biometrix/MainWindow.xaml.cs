@@ -247,7 +247,7 @@ namespace Biometrix
 
         private void ShowHistogram_Click(object sender, RoutedEventArgs e)
         {
-            Histogram histogram = new Histogram();
+            Histogram histogram = new Histogram(modifiedPixels);
             histogram.ShowDialog();
         }
     }

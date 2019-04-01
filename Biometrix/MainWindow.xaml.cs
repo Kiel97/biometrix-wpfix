@@ -45,7 +45,7 @@ namespace Biometrix
 
         private void CloseAppMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
 
         private void OpenImageMenuItem_Click(object sender, RoutedEventArgs e)

@@ -227,16 +227,16 @@ namespace Biometrix
         private void OriginalImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(OriginalImage);
-            getRGBvaluesAndSetThemToPaintSpinners(p, originalPixels);
+            GetRGBvaluesAndSetThemToPaintSpinners(p, originalPixels);
         }
 
         private void ModifiedImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(ModifiedImage);
-            getRGBvaluesAndSetThemToPaintSpinners(p, modifiedPixels);
+            GetRGBvaluesAndSetThemToPaintSpinners(p, modifiedPixels);
         }
 
-        private void getRGBvaluesAndSetThemToPaintSpinners(Point p, byte[] pixels)
+        private void GetRGBvaluesAndSetThemToPaintSpinners(Point p, byte[] pixels)
         {
             int x = (int)p.X;
             int y = (int)p.Y;

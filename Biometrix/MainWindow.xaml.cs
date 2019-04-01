@@ -24,6 +24,7 @@ namespace Biometrix
     {
         private WriteableBitmap originalBitmap;
         private WriteableBitmap modifiedBitmap;
+        private bool grayScale;
         private int stride;
         private int bytesPerPixel;
         byte[] originalPixels;
@@ -71,6 +72,7 @@ namespace Biometrix
 
                 int imageWidth = (int)OriginalImage.Source.Width;
                 int imageHeight = (int)OriginalImage.Source.Height;
+                grayScale = IsInGrayScaleMode((BitmapSource)OriginalImage.Source);
 
                 Title = $"Biometrix - {dialog.FileName} ({imageWidth}x{imageHeight})";
 
@@ -243,6 +245,15 @@ namespace Biometrix
             SpinValueR.Value = pixels[index + 2];
             SpinValueG.Value = pixels[index + 1];
             SpinValueB.Value = pixels[index];
+        }
+
+        private bool IsInGrayScaleMode(BitmapSource bitmapSource)
+        {
+            return bitmapSource.Format == PixelFormats.Gray16 || 
+                   bitmapSource.Format == PixelFormats.Gray2 ||
+                   bitmapSource.Format == PixelFormats.Gray32Float ||
+                   bitmapSource.Format == PixelFormats.Gray4 ||
+                   bitmapSource.Format == PixelFormats.Gray8;
         }
     }
 }

@@ -45,6 +45,7 @@
                     <Label Name="ColorLabel" Grid.Row="3" Grid.Column="1" Margin="2" Padding="3" Background="White" BorderBrush="DarkGray" BorderThickness="1" MinHeight="25"></Label>
                 </Grid>
             </GroupBox>
+            <Button Name="ShowHistogram" Margin="5" Padding="5" Click="ShowHistogram_Click">Pokaż histogram</Button>
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>

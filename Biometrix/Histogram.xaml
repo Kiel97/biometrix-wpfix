@@ -1,0 +1,22 @@
+﻿<Window x:Class="Biometrix.Histogram"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Biometrix"
+        mc:Ignorable="d"
+        Title="Histogram" Height="512" Width="512">
+    <DockPanel>
+        <GroupBox Header="Wartości" DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Name="AveragedValuesRadioBtn" Margin="3" IsChecked="True">Uśrednione</RadioButton>
+                <RadioButton Name="RedValuesRadioBtn" Margin="3">Czerwone</RadioButton>
+                <RadioButton Name="GreenValuesRadioBtn" Margin="3">Zielone</RadioButton>
+                <RadioButton Name="BlueValuesRadioBtn" Margin="3">Niebieskie</RadioButton>
+            </StackPanel>
+        </GroupBox>
+        <Image Margin="5">
+            
+        </Image>
+    </DockPanel>
+</Window>

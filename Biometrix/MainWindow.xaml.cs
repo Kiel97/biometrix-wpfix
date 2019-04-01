@@ -244,5 +244,11 @@ namespace Biometrix
             SpinValueG.Value = pixels[index + 1];
             SpinValueB.Value = pixels[index];
         }
+
+        private void ShowHistogram_Click(object sender, RoutedEventArgs e)
+        {
+            Histogram histogram = new Histogram();
+            histogram.ShowDialog();
+        }
     }
 }

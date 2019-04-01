@@ -34,7 +34,7 @@ namespace Biometrix
             {
                 new LineSeries
                 {
-                    Title = "Tytuł histogramu",
+                    Title = "Ilość pikseli",
                     LineSmoothness = 0,
                     Values = new ChartValues<int>()
                 }

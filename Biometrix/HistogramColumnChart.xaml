@@ -10,10 +10,10 @@
     <Grid>
         <lvc:CartesianChart Series="{Binding SeriesCollection}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Wartość piksela" Labels="{Binding Labels}"/>
+                <lvc:Axis Title="Wartość piksela" Labels="{Binding Labels}" MaxValue="255"/>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Ilość pikseli" />
+                <lvc:Axis Title="Ilość pikseli" MinValue="0"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
     </Grid>

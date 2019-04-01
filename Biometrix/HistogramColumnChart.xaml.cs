@@ -32,9 +32,10 @@ namespace Biometrix
 
             SeriesCollection = new SeriesCollection
             {
-                new ColumnSeries
+                new LineSeries
                 {
                     Title = "Tytuł histogramu",
+                    LineSmoothness = 0,
                     Values = new ChartValues<int>()
                 }
             };

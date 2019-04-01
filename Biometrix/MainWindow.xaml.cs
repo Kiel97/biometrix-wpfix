@@ -63,11 +63,23 @@ namespace Biometrix
             bool result = (bool)dialog.ShowDialog();
             if (result)
             {
-                originalBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
-                modifiedBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+                if (System.IO.Path.GetExtension(dialog.FileName) == ".gif")
+                {
+                    Stream imageStream = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    GifBitmapDecoder decoder = new GifBitmapDecoder(imageStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+                    BitmapSource source = decoder.Frames[0];
+                    originalBitmap = new WriteableBitmap(source);
+                    modifiedBitmap = new WriteableBitmap(source);
+                }
+                else
+                {
+                    originalBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+                    modifiedBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+                }
 
                 OriginalImage.Source = originalBitmap;
                 ModifiedImage.Source = modifiedBitmap;
+
 
                 int imageWidth = (int)OriginalImage.Source.Width;
                 int imageHeight = (int)OriginalImage.Source.Height;

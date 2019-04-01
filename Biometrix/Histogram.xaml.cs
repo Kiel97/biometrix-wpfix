@@ -37,6 +37,8 @@ namespace Biometrix
         {
             pixels = imagePixels;
             InitializeComponent();
+
+            HistogramChart.SeriesCollection[0].Values.Add(100d);
         }
 
         private void ValuesRadioBtn_Checked(object sender, RoutedEventArgs e)

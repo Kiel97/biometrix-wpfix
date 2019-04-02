@@ -78,7 +78,7 @@ namespace Biometrix
         {
             int[] histogram = new int[256];
 
-            for (int j = 0; j < pixels.Length / 4; j += 4)
+            for (int j = 0; j < pixels.Length; j += 4)
             {
                 int value;
                 switch (colorMode)

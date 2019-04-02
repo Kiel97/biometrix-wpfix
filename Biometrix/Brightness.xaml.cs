@@ -23,5 +23,26 @@ namespace Biometrix
         {
             InitializeComponent();
         }
+
+        private void ASpinValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            try
+            {
+                if (ASpinValue.Value == 1)
+                {
+                    PreviewButton.IsEnabled = false;
+                    ConfirmButton.IsEnabled = false;
+                }
+                else
+                {
+                    PreviewButton.IsEnabled = true;
+                    ConfirmButton.IsEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
     }
 }

@@ -79,7 +79,7 @@ namespace Biometrix
                 originalPixels = new byte[stride * imageHeight];
                 modifiedPixels = new byte[stride * imageHeight];
 
-                originalBitmap.CopyPixels(originalPixels, stride, 0);
+                modifiedBitmap.CopyPixels(originalPixels, stride, 0);
                 modifiedBitmap.CopyPixels(modifiedPixels, stride, 0);
 
                 SaveImageMenuItem.IsEnabled = true;

@@ -15,6 +15,13 @@
                 <Separator/>
                 <MenuItem Name="CloseAppMenuItem" Header="Zakończ" Click="CloseAppMenuItem_Click"/>
             </MenuItem>
+            <MenuItem Name="ColorSectionMenuItem" Header="Kolory" IsEnabled="False">
+                <MenuItem Name="ShowHistogramMenuItem" Header="Pokaż histogram" Click="ShowHistogramMenuItem_Click" />
+                <Separator/>
+                <MenuItem Header="Rozjaśnij/przyciemnij"/>
+                <MenuItem Header="Rozciągnij"/>
+                <MenuItem Header="Wyrównaj"/>
+            </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Name="ImageStatusBarItem">Gotowe</StatusBarItem>
@@ -45,7 +52,6 @@
                     <Label Name="ColorLabel" Grid.Row="3" Grid.Column="1" Margin="2" Padding="3" Background="White" BorderBrush="DarkGray" BorderThickness="1" MinHeight="25"></Label>
                 </Grid>
             </GroupBox>
-            <Button Name="ShowHistogramBtn" Margin="5" Padding="5" IsEnabled="False" Click="ShowHistogram_Click">Pokaż histogram</Button>
         </StackPanel>
         <Grid>
             <Grid.ColumnDefinitions>

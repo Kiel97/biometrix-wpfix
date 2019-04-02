@@ -83,7 +83,7 @@ namespace Biometrix
                 modifiedBitmap.CopyPixels(modifiedPixels, stride, 0);
 
                 SaveImageMenuItem.IsEnabled = true;
-                ShowHistogramBtn.IsEnabled = true;
+                ColorSectionMenuItem.IsEnabled = true;
             }
         }
 
@@ -285,7 +285,7 @@ namespace Biometrix
                    bitmapSource.Format == PixelFormats.Gray8;
         }
 
-        private void ShowHistogram_Click(object sender, RoutedEventArgs e)
+        private void ShowHistogramMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Histogram histogram = new Histogram(modifiedPixels);
             histogram.ShowDialog();

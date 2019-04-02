@@ -24,57 +24,48 @@ namespace Biometrix
             GRAYSCALE, RED, GREEN, BLUE
         }
 
-        private HistogramColorMode colorMode;
-        private byte[] pixels;
-        private int[] histogram;
-
-        public Histogram()
-        {
-            InitializeComponent();
-        }
+        private int[] redHistogram;
+        private int[] greenHistogram;
+        private int[] blueHistogram;
+        private int[] averagedHistogram;
 
         public Histogram(byte[] imagePixels)
         {
-            pixels = imagePixels;
+            redHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.RED);
+            greenHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.GREEN);
+            blueHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.BLUE);
+            averagedHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.GRAYSCALE);
+
             InitializeComponent();
-            HistogramChart.DisplayHistogram(histogram);
         }
 
         private void ValuesRadioBtn_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
+            int[] histogram;
 
             switch (radioButton.Name)
             {
                 case "AveragedValuesRadioBtn":
-                    colorMode = HistogramColorMode.GRAYSCALE;
+                    histogram = averagedHistogram;
                     break;
                 case "RedValuesRadioBtn":
-                    colorMode = HistogramColorMode.RED;
+                    histogram = redHistogram;
                     break;
                 case "GreenValuesRadioBtn":
-                    colorMode = HistogramColorMode.GREEN;
+                    histogram = greenHistogram;
                     break;
                 case "BlueValuesRadioBtn":
-                    colorMode = HistogramColorMode.BLUE;
+                    histogram = blueHistogram;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            histogram = getHistogramFromByteArray(pixels);
-
-            try
-            {
-                HistogramChart.DisplayHistogram(histogram);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            HistogramChart.DisplayHistogram(histogram);
         }
 
-        private int[] getHistogramFromByteArray(byte[] pixels)
+        private int[] GetHistogramFromByteArray(byte[] pixels, HistogramColorMode colorMode)
         {
             int[] histogram = new int[256];
 

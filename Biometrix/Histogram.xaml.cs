@@ -29,7 +29,7 @@ namespace Biometrix
         private int[] blueHistogram;
         private int[] averagedHistogram;
 
-        public Histogram(byte[] imagePixels)
+        public Histogram(byte[] imagePixels, bool grayScale)
         {
             redHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.RED);
             greenHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.GREEN);
@@ -37,6 +37,13 @@ namespace Biometrix
             averagedHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.GRAYSCALE);
 
             InitializeComponent();
+
+            if (grayScale)
+            {
+                RedValuesRadioBtn.IsEnabled = false;
+                GreenValuesRadioBtn.IsEnabled = false;
+                BlueValuesRadioBtn.IsEnabled = false;
+            }
         }
 
         private void ValuesRadioBtn_Checked(object sender, RoutedEventArgs e)

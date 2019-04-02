@@ -300,7 +300,7 @@ namespace Biometrix
 
         private void ShowHistogramMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Histogram histogram = new Histogram(modifiedPixels);
+            Histogram histogram = new Histogram(modifiedPixels, grayScale);
             histogram.ShowDialog();
         }
     }

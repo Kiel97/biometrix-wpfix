@@ -64,7 +64,7 @@ namespace Biometrix
             if (result)
             {
                 originalBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
-                modifiedBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
+                modifiedBitmap = new WriteableBitmap(new FormatConvertedBitmap(originalBitmap, PixelFormats.Bgra32, null, 0));
 
                 OriginalImage.Source = originalBitmap;
                 ModifiedImage.Source = modifiedBitmap;
@@ -74,7 +74,7 @@ namespace Biometrix
 
                 Title = $"Biometrix - {dialog.FileName} ({imageWidth}x{imageHeight})";
 
-                bytesPerPixel = originalBitmap.Format.BitsPerPixel / 8;
+                bytesPerPixel = modifiedBitmap.Format.BitsPerPixel / 8;
                 stride = imageWidth * bytesPerPixel;
                 originalPixels = new byte[stride * imageHeight];
                 modifiedPixels = new byte[stride * imageHeight];

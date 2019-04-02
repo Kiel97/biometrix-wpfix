@@ -19,9 +19,19 @@ namespace Biometrix
     /// </summary>
     public partial class Brightness : Window
     {
-        public Brightness()
+        WriteableBitmap previewBitmap;
+        WriteableBitmap beforeBitmap;
+        int stride;
+        int width;
+        int height;
+
+        public Brightness(byte[] pixels, int stride, int width, int height, WriteableBitmap modifiedBitmap)
         {
             InitializeComponent();
+            beforeBitmap = modifiedBitmap;
+            previewBitmap = new WriteableBitmap(modifiedBitmap);
+            previewBitmap.WritePixels(new Int32Rect(0, 0, width, height), pixels, stride, 0);
+            PreviewImage.Source = previewBitmap;
         }
 
         private void ASpinValue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

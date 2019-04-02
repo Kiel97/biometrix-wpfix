@@ -18,7 +18,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.Column="0" Grid.Row="0"></Image>
+        <Image Margin="5" Name="PreviewImage" Grid.Column="0" Grid.Row="0" Stretch="Fill"></Image>
         <GroupBox Grid.Column="1" Grid.Row="0" Header="Opcje">
             <StackPanel>
                 <GroupBox Header="Rodzaj funkcji">

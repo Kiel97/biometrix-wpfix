@@ -282,7 +282,8 @@ namespace Biometrix
                    bitmapSource.Format == PixelFormats.Gray2 ||
                    bitmapSource.Format == PixelFormats.Gray32Float ||
                    bitmapSource.Format == PixelFormats.Gray4 ||
-                   bitmapSource.Format == PixelFormats.Gray8;
+                   bitmapSource.Format == PixelFormats.Gray8 ||
+                   bitmapSource.Format == PixelFormats.BlackWhite;
         }
 
         private void ShowHistogramMenuItem_Click(object sender, RoutedEventArgs e)

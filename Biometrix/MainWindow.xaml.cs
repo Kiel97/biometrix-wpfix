@@ -22,6 +22,7 @@ namespace Biometrix
     /// </summary>
     public partial class MainWindow : Window
     {
+        private BitmapImage loadedBitmap;
         private WriteableBitmap originalBitmap;
         private WriteableBitmap modifiedBitmap;
         private int stride;
@@ -30,6 +31,7 @@ namespace Biometrix
         byte[] modifiedPixels;
 
         bool isDrawing = false;
+        bool grayScale = false;
 
         public MainWindow()
         {
@@ -63,8 +65,11 @@ namespace Biometrix
             bool result = (bool)dialog.ShowDialog();
             if (result)
             {
-                originalBitmap = new WriteableBitmap(new BitmapImage(new Uri(dialog.FileName)));
-                modifiedBitmap = new WriteableBitmap(new FormatConvertedBitmap(originalBitmap, PixelFormats.Bgra32, null, 0));
+                loadedBitmap = new BitmapImage(new Uri(dialog.FileName));
+                originalBitmap = new WriteableBitmap(new FormatConvertedBitmap(loadedBitmap, PixelFormats.Bgra32, null, 0));
+                modifiedBitmap = new WriteableBitmap(new FormatConvertedBitmap(loadedBitmap, PixelFormats.Bgra32, null, 0));
+
+                grayScale = IsInGrayScaleMode(loadedBitmap);
 
                 OriginalImage.Source = originalBitmap;
                 ModifiedImage.Source = modifiedBitmap;
@@ -79,7 +84,7 @@ namespace Biometrix
                 originalPixels = new byte[stride * imageHeight];
                 modifiedPixels = new byte[stride * imageHeight];
 
-                modifiedBitmap.CopyPixels(originalPixels, stride, 0);
+                originalBitmap.CopyPixels(originalPixels, stride, 0);
                 modifiedBitmap.CopyPixels(modifiedPixels, stride, 0);
 
                 SaveImageMenuItem.IsEnabled = true;
@@ -126,7 +131,14 @@ namespace Biometrix
                     default:
                         throw new ArgumentOutOfRangeException(extension);
                 }
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ModifiedImage.Source));
+
+                BitmapSource saveSource = (BitmapSource)ModifiedImage.Source;
+
+                if (grayScale)
+                    encoder.Frames.Add(BitmapFrame.Create(new FormatConvertedBitmap(saveSource, PixelFormats.Gray32Float, null, 0)));
+                else
+                    encoder.Frames.Add(BitmapFrame.Create(saveSource));
+
                 encoder.Save(saveStream);
                 saveStream.Close();
 
@@ -242,13 +254,13 @@ namespace Biometrix
         private void OriginalImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(OriginalImage);
-            GetRGBvaluesAndSetThemToPaintSpinners(p, originalPixels, IsInGrayScaleMode((BitmapSource)OriginalImage.Source));
+            GetRGBvaluesAndSetThemToPaintSpinners(p, originalPixels, grayScale);
         }
 
         private void ModifiedImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(ModifiedImage);
-            GetRGBvaluesAndSetThemToPaintSpinners(p, modifiedPixels, IsInGrayScaleMode((BitmapSource)ModifiedImage.Source));
+            GetRGBvaluesAndSetThemToPaintSpinners(p, modifiedPixels, grayScale);
         }
 
         private void GetRGBvaluesAndSetThemToPaintSpinners(Point p, byte[] pixels, bool isGrayScale)

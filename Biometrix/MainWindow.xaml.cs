@@ -303,5 +303,11 @@ namespace Biometrix
             Histogram histogram = new Histogram(modifiedPixels, grayScale);
             histogram.ShowDialog();
         }
+
+        private void ChangeBrightnessMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Brightness brightness = new Brightness();
+            brightness.ShowDialog();
+        }
     }
 }

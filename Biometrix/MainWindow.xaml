@@ -18,9 +18,9 @@
             <MenuItem Name="ColorSectionMenuItem" Header="Kolory" IsEnabled="False">
                 <MenuItem Name="ShowHistogramMenuItem" Header="Pokaż histogram" Click="ShowHistogramMenuItem_Click" />
                 <Separator/>
-                <MenuItem Header="Rozjaśnij/przyciemnij"/>
-                <MenuItem Header="Rozciągnij"/>
-                <MenuItem Header="Wyrównaj"/>
+                <MenuItem Name="ChangeBrightnessMenuItem" Header="Rozjaśnij/przyciemnij" Click="ChangeBrightnessMenuItem_Click"/>
+                <MenuItem IsEnabled="False" Header="Rozciągnij"/>
+                <MenuItem IsEnabled="False" Header="Wyrównaj"/>
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">

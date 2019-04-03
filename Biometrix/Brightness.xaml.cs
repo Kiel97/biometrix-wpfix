@@ -19,6 +19,8 @@ namespace Biometrix
     /// </summary>
     public partial class Brightness : Window
     {
+        public byte[] modifiedPixels;
+
         WriteableBitmap previewBitmap;
         byte[] pixels;
         int stride;
@@ -37,6 +39,8 @@ namespace Biometrix
             this.stride = stride;
             this.width = width;
             this.height = height;
+
+            modifiedPixels = new byte[pixels.Length];
 
             UpdatePreviewImage(pixels);
         }
@@ -80,11 +84,13 @@ namespace Biometrix
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = true;
             this.Close();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
 
@@ -94,6 +100,8 @@ namespace Biometrix
             previewBitmap = new WriteableBitmap(bitmap);
 
             PreviewImage.Source = previewBitmap;
+
+            modifiedPixels = pixels;
         }
 
         private byte[] CalculateLogImageBrightness(byte[] pixels)

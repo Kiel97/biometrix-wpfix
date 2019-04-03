@@ -20,7 +20,6 @@ namespace Biometrix
     public partial class Brightness : Window
     {
         WriteableBitmap previewBitmap;
-        WriteableBitmap beforeBitmap;
         byte[] pixels;
         int stride;
         int width;
@@ -32,7 +31,6 @@ namespace Biometrix
         public Brightness(byte[] pixels, int stride, int width, int height, WriteableBitmap modifiedBitmap)
         {
             InitializeComponent();
-            beforeBitmap = modifiedBitmap;
             previewBitmap = new WriteableBitmap(modifiedBitmap);
 
             this.pixels = pixels;
@@ -40,7 +38,6 @@ namespace Biometrix
             this.width = width;
             this.height = height;
 
-            PreviewImage.Source = previewBitmap;
             UpdatePreviewImage(pixels);
         }
 
@@ -48,7 +45,7 @@ namespace Biometrix
         {
             try
             {
-                if (ASpinValue.Value == 1)
+                if (ASpinValue.Value == 1 && LogFunction.IsChecked == true)
                 {
                     PreviewButton.IsEnabled = false;
                     ConfirmButton.IsEnabled = false;
@@ -93,7 +90,10 @@ namespace Biometrix
 
         private void UpdatePreviewImage(byte[] pixels)
         {
-            previewBitmap.WritePixels(new Int32Rect(0, 0, width, height), pixels, stride, 0);
+            BitmapSource bitmap = BitmapImage.Create(width, height, 96, 96, PixelFormats.Bgr32, null, pixels, stride);
+            previewBitmap = new WriteableBitmap(bitmap);
+
+            PreviewImage.Source = previewBitmap;
         }
 
         private byte[] CalculateLogImageBrightness(byte[] pixels)

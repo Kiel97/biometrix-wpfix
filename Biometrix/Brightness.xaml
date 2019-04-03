@@ -44,8 +44,8 @@
                     <Label Margin="3" Grid.Column="0" Grid.Row="2">c:</Label>
 
                     <xctk:DoubleUpDown Name="ASpinValue" Margin="3" Grid.Column="1" Grid.Row="0" ValueChanged="ASpinValue_ValueChanged" DisplayDefaultValueOnEmptyText="True" DefaultValue="2" Increment="0.001" Minimum="0.001" Maximum="100"/>
-                    <xctk:DoubleUpDown Name="BSpinValue" Margin="3" Grid.Column="1" Grid.Row="1" DisplayDefaultValueOnEmptyText="True" DefaultValue="0" Increment="0.01" Minimum="-100" Maximum="100"/>
-                    <xctk:DoubleUpDown Name="CSpinValue" Margin="3" Grid.Column="1" Grid.Row="2" DisplayDefaultValueOnEmptyText="True" DefaultValue="1" Increment="0.001" Minimum="0.001" Maximum="10"/>
+                    <xctk:DoubleUpDown Name="BSpinValue" Margin="3" Grid.Column="1" Grid.Row="1" DisplayDefaultValueOnEmptyText="True" DefaultValue="0" Increment="0.01" Minimum="-255" Maximum="255"/>
+                    <xctk:DoubleUpDown Name="CSpinValue" Margin="3" Grid.Column="1" Grid.Row="2" DisplayDefaultValueOnEmptyText="True" DefaultValue="1" Increment="0.001" Minimum="0.001" Maximum="1000"/>
                 </Grid>
             </StackPanel>
         </GroupBox>

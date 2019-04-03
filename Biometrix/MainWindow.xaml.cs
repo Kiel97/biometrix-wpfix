@@ -306,7 +306,7 @@ namespace Biometrix
 
         private void ChangeBrightnessMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Brightness brightness = new Brightness(modifiedPixels, stride,(int)ModifiedImage.Width, (int)ModifiedImage.Height, modifiedBitmap);
+            Brightness brightness = new Brightness(modifiedPixels, stride,(int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap);
             brightness.ShowDialog();
         }
     }

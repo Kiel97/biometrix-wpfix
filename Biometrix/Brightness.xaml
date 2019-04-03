@@ -18,7 +18,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Image Margin="5" Name="PreviewImage" Grid.Column="0" Grid.Row="0" Stretch="Fill"></Image>
+        <Image Margin="5" Name="PreviewImage" Grid.Column="0" Grid.Row="0" Stretch="Fill" RenderOptions.BitmapScalingMode="NearestNeighbor" ></Image>
         <GroupBox Grid.Column="1" Grid.Row="0" Header="Opcje">
             <StackPanel>
                 <GroupBox Header="Rodzaj funkcji">
@@ -50,9 +50,9 @@
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
-            <Button Name="PreviewButton" Margin="3" Padding="3">Podgląd</Button>
-            <Button Name="ConfirmButton" Margin="3" Padding="3">Zatwierdź</Button>
-            <Button Name="CancelButton" Margin="3" Padding="3">Anuluj</Button>
+            <Button Name="PreviewButton" Margin="3" Padding="3" Click="PreviewButton_Click">Podgląd</Button>
+            <Button Name="ConfirmButton" Margin="3" Padding="3" Click="ConfirmButton_Click">Zatwierdź</Button>
+            <Button Name="CancelButton" Margin="3" Padding="3" Click="CancelButton_Click">Anuluj</Button>
         </StackPanel>
     </Grid>
 </Window>

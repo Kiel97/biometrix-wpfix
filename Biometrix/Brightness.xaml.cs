@@ -26,6 +26,9 @@ namespace Biometrix
         int width;
         int height;
 
+        const string LOG_FORMULA = "f(x) = c * loga x + b";
+        const string SQUARE_FORMULA = "f(x) = ax^2 + bx + c";
+
         public Brightness(byte[] pixels, int stride, int width, int height, WriteableBitmap modifiedBitmap)
         {
             InitializeComponent();
@@ -64,7 +67,16 @@ namespace Biometrix
 
         private void PreviewButton_Click(object sender, RoutedEventArgs e)
         {
-            byte[] newPixels = CalculateLogImageBrightness(pixels);
+            byte[] newPixels = null;
+
+            if (LogFunction.IsChecked == true)
+            {
+                newPixels = CalculateLogImageBrightness(pixels);
+            }
+            else if (SquareFunction.IsChecked == true)
+            {
+                newPixels = CalculateSquareImageBrightness(pixels);
+            }
 
             UpdatePreviewImage(newPixels);
         }
@@ -86,22 +98,74 @@ namespace Biometrix
 
         private byte[] CalculateLogImageBrightness(byte[] pixels)
         {
+            double a = (double)ASpinValue.Value;
+            double b = (double)BSpinValue.Value;
+            double c = (double)CSpinValue.Value;
+
             byte[] p = new byte[pixels.Length];
 
             for (int i = 0; i < p.Length; i+=4)
             {
-                p[i] = GetLogFunctionValue((double)ASpinValue.Value, (double)BSpinValue.Value, (double)CSpinValue.Value, pixels[i]);
-                p[i+1] = GetLogFunctionValue((double)ASpinValue.Value, (double)BSpinValue.Value, (double)CSpinValue.Value, pixels[i+1]);
-                p[i+2] = GetLogFunctionValue((double)ASpinValue.Value, (double)BSpinValue.Value, (double)CSpinValue.Value, pixels[i+2]);
+                p[i] = (byte)GetLogFunctionValue(a, b, c, pixels[i]);
+                p[i+1] = (byte)GetLogFunctionValue(a, b, c, pixels[i+1]);
+                p[i+2] = (byte)GetLogFunctionValue(a, b, c, pixels[i+2]);
                 p[i+3] = pixels[i+3];
             }
 
             return p;
         }
 
-        private byte GetLogFunctionValue(double a, double b, double c, byte x)
+        private byte[] CalculateSquareImageBrightness(byte[] pixels)
         {
-            return (byte)(x + 255);
+            double a = (double)ASpinValue.Value;
+            double b = (double)BSpinValue.Value;
+            double c = (double)CSpinValue.Value;
+
+            byte[] p = new byte[pixels.Length];
+
+            for (int i = 0; i < p.Length; i+=4)
+            {
+                p[i] = (byte)GetSquareFunctionValue(a, b, c, pixels[i]);
+                p[i+1] = (byte)GetSquareFunctionValue(a, b, c, pixels[i+1]);
+                p[i+2] = (byte)GetSquareFunctionValue(a, b, c, pixels[i+2]);
+                p[i+3] = pixels[i+3];
+            }
+
+            return p;
+        }
+
+        private double GetLogFunctionValue(double a, double b, double c, byte x)
+        {
+            return c * Math.Log(x, a) + b;
+        }
+
+        private double GetSquareFunctionValue(double a, double b, double c, byte x)
+        {
+            return a * Math.Pow(x, 2) + b * x + c;
+        }
+
+        private void LogFunction_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FunctionFormulaLabel.Content = LOG_FORMULA;
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void SquareFunction_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FunctionFormulaLabel.Content = SQUARE_FORMULA;
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }

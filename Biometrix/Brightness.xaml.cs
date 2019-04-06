@@ -35,6 +35,9 @@ namespace Biometrix
             InitializeComponent();
             previewBitmap = new WriteableBitmap(modifiedBitmap);
 
+            LogFunction.Checked += LogFunction_Checked;
+            SquareFunction.Checked += SquareFunction_Checked;
+
             this.pixels = pixels;
             this.stride = stride;
             this.width = width;
@@ -154,26 +157,12 @@ namespace Biometrix
 
         private void LogFunction_Checked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                FunctionFormulaLabel.Content = LOG_FORMULA;
-            }
-            catch (NullReferenceException ex)
-            {
-                Console.WriteLine(ex);
-            }
+            FunctionFormulaLabel.Content = LOG_FORMULA;
         }
 
         private void SquareFunction_Checked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                FunctionFormulaLabel.Content = SQUARE_FORMULA;
-            }
-            catch (NullReferenceException ex)
-            {
-                Console.WriteLine(ex);
-            }
+            FunctionFormulaLabel.Content = SQUARE_FORMULA;
         }
     }
 }

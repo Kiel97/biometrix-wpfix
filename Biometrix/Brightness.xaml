@@ -23,8 +23,8 @@
             <StackPanel>
                 <GroupBox Header="Rodzaj funkcji">
                     <StackPanel>
-                        <RadioButton Name="LogFunction" IsChecked="True" Checked="LogFunction_Checked">logarytmiczna</RadioButton>
-                        <RadioButton Name="SquareFunction" Checked="SquareFunction_Checked">kwadratowa</RadioButton>
+                        <RadioButton Name="LogFunction" IsChecked="True">logarytmiczna</RadioButton>
+                        <RadioButton Name="SquareFunction">kwadratowa</RadioButton>
                     </StackPanel>
                 </GroupBox>
                 <Label Name="FunctionFormulaLabel">f(x) = c * loga x + b</Label>

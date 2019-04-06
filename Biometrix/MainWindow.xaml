@@ -45,9 +45,9 @@
                     <Label Grid.Row="0" Grid.Column="0" Margin="2" Padding="3">Red:</Label>
                     <Label Grid.Row="1" Grid.Column="0" Margin="2" Padding="3">Green:</Label>
                     <Label Grid.Row="2" Grid.Column="0" Margin="2" Padding="3">Blue:</Label>
-                    <xctk:IntegerUpDown Name="SpinValueR" Grid.Row="0" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" DisplayDefaultValueOnEmptyText="True" Minimum="0" Maximum="255" Increment="1" ValueChanged="SpinValueRGB_ValueChanged"></xctk:IntegerUpDown>
-                    <xctk:IntegerUpDown Name="SpinValueG" Grid.Row="1" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" DisplayDefaultValueOnEmptyText="True" Minimum="0" Maximum="255" Increment="1" ValueChanged="SpinValueRGB_ValueChanged"></xctk:IntegerUpDown>
-                    <xctk:IntegerUpDown Name="SpinValueB" Grid.Row="2" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" DisplayDefaultValueOnEmptyText="True" Minimum="0" Maximum="255" Increment="1" ValueChanged="SpinValueRGB_ValueChanged"></xctk:IntegerUpDown>
+                    <xctk:IntegerUpDown Name="SpinValueR" Grid.Row="0" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" DisplayDefaultValueOnEmptyText="True" Minimum="0" Maximum="255" Increment="1"></xctk:IntegerUpDown>
+                    <xctk:IntegerUpDown Name="SpinValueG" Grid.Row="1" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" DisplayDefaultValueOnEmptyText="True" Minimum="0" Maximum="255" Increment="1"></xctk:IntegerUpDown>
+                    <xctk:IntegerUpDown Name="SpinValueB" Grid.Row="2" Grid.Column="1" Margin="2" Padding="3" Value="255" DefaultValue="255" DisplayDefaultValueOnEmptyText="True" Minimum="0" Maximum="255" Increment="1"></xctk:IntegerUpDown>
                     <Label Grid.Row="3" Grid.Column="0" Margin="2" Padding="3">Kolor:</Label>
                     <Label Name="ColorLabel" Grid.Row="3" Grid.Column="1" Margin="2" Padding="3" Background="White" BorderBrush="DarkGray" BorderThickness="1" MinHeight="25"></Label>
                 </Grid>

@@ -36,6 +36,10 @@ namespace Biometrix
         public MainWindow()
         {
             InitializeComponent();
+
+            SpinValueR.ValueChanged += SpinValueRGB_ValueChanged;
+            SpinValueG.ValueChanged += SpinValueRGB_ValueChanged;
+            SpinValueB.ValueChanged += SpinValueRGB_ValueChanged;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -149,14 +153,7 @@ namespace Biometrix
 
         private void SpinValueRGB_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            try
-            {//FIXME: Wywala 3 NullReferenceExceptions, bo ładuje się szybciej, niż spinery - nie wiem jak to naprawić
-                ColorLabel.Background = new SolidColorBrush(Color.FromRgb((byte)SpinValueR.Value, (byte)SpinValueG.Value, (byte)SpinValueB.Value));
-            }
-            catch (NullReferenceException ex)
-            {
-                Console.WriteLine(ex);
-            }
+            ColorLabel.Background = new SolidColorBrush(Color.FromRgb((byte)SpinValueR.Value, (byte)SpinValueG.Value, (byte)SpinValueB.Value));
         }
 
         private void ZoomOriginalSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

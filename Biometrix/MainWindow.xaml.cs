@@ -40,6 +40,9 @@ namespace Biometrix
             SpinValueR.ValueChanged += SpinValueRGB_ValueChanged;
             SpinValueG.ValueChanged += SpinValueRGB_ValueChanged;
             SpinValueB.ValueChanged += SpinValueRGB_ValueChanged;
+
+            ZoomOriginalSlider.ValueChanged += ZoomOriginalSlider_ValueChanged;
+            ZoomModifiedSlider.ValueChanged += ZoomModifiedSlider_ValueChanged;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -168,16 +171,9 @@ namespace Biometrix
 
         private void ScaleImage(Image image, Slider zoomSlider, Label zoomLabel)
         {
-            try
-            {
-                ScaleTransform st = (ScaleTransform)image.LayoutTransform;
-                st.ScaleX = zoomSlider.Value;
-                st.ScaleY = zoomSlider.Value;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+            ScaleTransform st = (ScaleTransform)image.LayoutTransform;
+            st.ScaleX = zoomSlider.Value;
+            st.ScaleY = zoomSlider.Value;
             zoomLabel.Content = $"{zoomSlider.Value}00%";
         }
 

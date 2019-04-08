@@ -345,11 +345,16 @@ namespace Biometrix
 
                 ConvertImageToGrayscale();
             }
-            Binarization binarization = new Binarization();
+
+            Binarization binarization = new Binarization(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap);
             if (binarization.ShowDialog() == true)
             {
-                //update binaryzacji
-                Console.WriteLine("Po binaryzacji");
+                modifiedPixels = binarization.modifiedPixels;
+
+                BitmapSource bitmap = BitmapImage.Create((int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, 96, 96, PixelFormats.Bgr32, null, modifiedPixels, stride);
+                modifiedBitmap = new WriteableBitmap(bitmap);
+
+                ModifiedImage.Source = modifiedBitmap;
             }
         }
     }

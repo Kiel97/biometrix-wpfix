@@ -26,6 +26,11 @@ namespace Biometrix
 
         private void PreviewButton_Click(object sender, RoutedEventArgs e)
         {
+            Binarize();
+        }
+
+        private void Binarize()
+        {
             byte threshold = (byte)ThresholdSpinValue.Value;
             byte[] LUT = new byte[256];
             if (UnderThresholdRadioBtn.IsChecked == true)

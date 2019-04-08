@@ -76,7 +76,7 @@ namespace Biometrix
                 originalBitmap = new WriteableBitmap(new FormatConvertedBitmap(loadedBitmap, PixelFormats.Bgra32, null, 0));
                 modifiedBitmap = new WriteableBitmap(new FormatConvertedBitmap(loadedBitmap, PixelFormats.Bgra32, null, 0));
 
-                grayScale = IsInGrayScaleMode(loadedBitmap);
+                grayScale = IsInGrayScaleMode(modifiedBitmap);
 
                 OriginalImage.Source = originalBitmap;
                 ModifiedImage.Source = modifiedBitmap;
@@ -333,6 +333,24 @@ namespace Biometrix
             ModifiedImage.Source = modifiedBitmap;
 
             grayScale = true;
+        }
+
+        private void ChangeBinarizationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!grayScale)
+            {
+                MessageBoxResult result = MessageBox.Show("Proces binaryzacji można przeprowadzić tylko na obrazach czarnobiałych. Czy chcesz przekonwertować bitmapę do skali szarości?", "Wymaga czarnobiała bitmapa", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if(result == MessageBoxResult.No)
+                    return;
+
+                ConvertImageToGrayscale();
+            }
+            Binarization binarization = new Binarization();
+            if (binarization.ShowDialog() == true)
+            {
+                //update binaryzacji
+                Console.WriteLine("Po binaryzacji");
+            }
         }
     }
 }

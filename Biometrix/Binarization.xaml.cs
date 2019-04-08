@@ -76,6 +76,22 @@ namespace Biometrix
                     LUT[i] = i >= threshold ? (byte)0 : (byte)255;
                 }
             }
+            else if (BetweenThresholdRadioBtn.IsChecked == true)
+            {
+                byte threshold_B = (byte)ThresholdBSpinValue.Value;
+                for (int i = 0; i < LUT.Length; i++)
+                {
+                    LUT[i] = (i <= threshold || i > threshold_B) ? (byte)0 : (byte)255;
+                }
+            }
+            else if (ExceptThresholdRadioBtn.IsChecked == true)
+            {
+                byte threshold_B = (byte)ThresholdBSpinValue.Value;
+                for (int i = 0; i < LUT.Length; i++)
+                {
+                    LUT[i] = (i >= threshold && i < threshold_B) ? (byte)0 : (byte)255;
+                }
+            }
 
             byte[] p = new byte[pixels.Length];
             for (int i = 0; i < p.Length; i += 4)

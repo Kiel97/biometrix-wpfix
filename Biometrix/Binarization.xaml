@@ -26,13 +26,21 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*" MinWidth="55"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Grid.Row="1" Margin="3">Wartość progu:</Label>
-                    <xctk:ByteUpDown Name="ThresholdSpinValue" Margin="3" Grid.Column="1" Grid.Row="1" Value="0" DisplayDefaultValueOnEmptyText="True" DefaultValue="255" Minimum="0" Maximum="255"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" Margin="3">Wartość progu A:</Label>
+                    <xctk:ByteUpDown Name="ThresholdSpinValue" Margin="3" Grid.Column="1" Grid.Row="0" Value="0" DisplayDefaultValueOnEmptyText="True" DefaultValue="255" Minimum="0" Maximum="255"/>
+                    <Label Grid.Column="0" Grid.Row="1" Margin="3">Wartość progu B:</Label>
+                    <xctk:ByteUpDown Name="ThresholdBSpinValue" Margin="3" Grid.Column="1" Grid.Row="1" Value="0" DisplayDefaultValueOnEmptyText="True" DefaultValue="255" Minimum="0" Maximum="255"/>
                 </Grid>
                 <GroupBox Header="Rodzaj" Margin="3" Padding="3">
                     <StackPanel>
                         <RadioButton Name="UnderThresholdRadioBtn" IsChecked="True">Dolne progowanie</RadioButton>
                         <RadioButton Name="AboveThresholdRadioBtn">Górne progowanie</RadioButton>
+                        <RadioButton Name="BetweenThresholdRadioBtn">Między progowanie</RadioButton>
+                        <RadioButton Name="ExceptThresholdRadioBtn">Poza progowanie</RadioButton>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

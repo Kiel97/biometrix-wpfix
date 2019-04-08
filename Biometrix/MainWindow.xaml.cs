@@ -214,7 +214,7 @@ namespace Biometrix
             int gValue = modifiedPixels[index + 1];
             int bValue = modifiedPixels[index];
 
-            if (IsInGrayScaleMode((BitmapSource)OriginalImage.Source))
+            if (IsInGrayScaleMode((BitmapSource)ModifiedImage.Source))
             {
                 int avgValue = (rValue + gValue + bValue) / 3;
                 rValue = avgValue;
@@ -231,6 +231,9 @@ namespace Biometrix
                 modifiedPixels[index]     = (byte)SpinValueB.Value;
 
                 modifiedBitmap.WritePixels(new Int32Rect(0, 0, (int)modifiedBitmap.Width, (int)modifiedBitmap.Height), modifiedPixels, stride, 0);
+
+                if (grayScale && (((byte)SpinValueR.Value != (byte)SpinValueB.Value) || ((byte)SpinValueG.Value != (byte)SpinValueB.Value)))
+                    grayScale = false;
             }
         }
 
@@ -247,13 +250,13 @@ namespace Biometrix
         private void OriginalImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(OriginalImage);
-            GetRGBvaluesAndSetThemToPaintSpinners(p, originalPixels, grayScale);
+            GetRGBvaluesAndSetThemToPaintSpinners(p, originalPixels, IsInGrayScaleMode((BitmapSource)OriginalImage.Source));
         }
 
         private void ModifiedImage_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(ModifiedImage);
-            GetRGBvaluesAndSetThemToPaintSpinners(p, modifiedPixels, grayScale);
+            GetRGBvaluesAndSetThemToPaintSpinners(p, modifiedPixels, IsInGrayScaleMode((BitmapSource)ModifiedImage.Source));
         }
 
         private void GetRGBvaluesAndSetThemToPaintSpinners(Point p, byte[] pixels, bool isGrayScale)
@@ -309,6 +312,27 @@ namespace Biometrix
 
                 ModifiedImage.Source = modifiedBitmap;
             }
+        }
+
+        private void ConvertToGrayMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Czy chcesz przekonwertować obraz do skali szarości?", "Konwersja do skali szarości", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            if (result == MessageBoxResult.OK)
+                ConvertImageToGrayscale();
+        }
+
+        private void ConvertImageToGrayscale()
+        {
+            if (grayScale)
+                return;
+
+            modifiedBitmap = new WriteableBitmap(new FormatConvertedBitmap(modifiedBitmap, PixelFormats.Gray32Float, null, 0));
+            modifiedBitmap = new WriteableBitmap(new FormatConvertedBitmap(modifiedBitmap, PixelFormats.Bgr32, null, 0));
+            modifiedBitmap.CopyPixels(modifiedPixels, stride, 0);
+
+            ModifiedImage.Source = modifiedBitmap;
+
+            grayScale = true;
         }
     }
 }

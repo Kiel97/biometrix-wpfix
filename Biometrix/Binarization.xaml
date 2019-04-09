@@ -43,6 +43,7 @@
                         <RadioButton Name="ExceptThresholdRadioBtn">Poza progowanie</RadioButton>
                     </StackPanel>
                 </GroupBox>
+                <Button Name="OtsuThresholdBtn" Margin="3" Padding="3" Click="OtsuThresholdBtn_Click">Próg Otsu</Button>
             </StackPanel>
         </GroupBox>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >

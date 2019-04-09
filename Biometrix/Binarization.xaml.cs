@@ -97,8 +97,8 @@ namespace Biometrix
             for (int i = 0; i < p.Length; i += 4)
             {
                 p[i] = LUT[pixels[i]];
-                p[i + 1] = LUT[pixels[i+1]];
-                p[i + 2] = LUT[pixels[i+2]];
+                p[i + 1] = LUT[pixels[i + 1]];
+                p[i + 2] = LUT[pixels[i + 2]];
                 p[i + 3] = pixels[i + 3];
             }
 
@@ -108,113 +108,98 @@ namespace Biometrix
         private void OtsuThresholdCalculate()
         {
             int[] histogram = HistogramCreator.GetHistogramFromByteArray(pixels, HistogramCreator.ColorMode.GRAYSCALE);
-            int threshold = 0;
 
+            int threshold = 0;
             double minClassVariance = double.MaxValue;
-            int sumOfPixels = histogram.Sum();
 
             for (int T = 0; T < 256; T++)
             {
-                double weightBackground = 0, meanBackground = 0, varianceBackground = 0, weightForeground = 0, meanForeground = 0, varianceForeground = 0;
-                double withinClassVariance = double.MaxValue;
-                int pixelsFromZeroToThreshold = 0;
-                int pixelsFromThresholdTo255 = 0;
-
-                //weightBackground
-                for (int i = 0; i < T; i++)
-                {
-                    pixelsFromZeroToThreshold += histogram[i];
-                }
-                weightBackground = pixelsFromZeroToThreshold / sumOfPixels;
-
-                //meanBackground
-                int subSum = 0;
-                for (int i = 0; i < T; i++)
-                {
-                    subSum += (i * histogram[i]);
-                }
-
-                try
-                {
-                    meanBackground = subSum / pixelsFromZeroToThreshold;
-                }
-                catch (DivideByZeroException)
-                {
-                    meanBackground = subSum / 1;
-                }
-                
-
-                //varianceBackground
-                double subSumFloat = 0;
-                for (int i = 0; i < T; i++)
-                {
-                    subSumFloat += (Math.Pow(i - meanBackground, 2)) * histogram[i];
-                }
-
-                try
-                {
-                    varianceBackground = subSumFloat / pixelsFromZeroToThreshold;
-                }
-                catch (DivideByZeroException)
-                {
-                    varianceBackground = subSumFloat / 1;
-                }
-                
-
-                //---------------------------------------------------------------
-
-                //weightForeground
-                for (int i = T; i < 256; i++)
-                {
-                    pixelsFromThresholdTo255 += histogram[i];
-                }
-                weightForeground = pixelsFromThresholdTo255 / sumOfPixels;
-
-                //meanForeground
-                int subSumF = 0;
-                for (int i = T; i < 256; i++)
-                {
-                    subSumF += (i * histogram[i]);
-                }
-
-                try
-                {
-                    meanForeground = subSumF / pixelsFromThresholdTo255;
-                }
-                catch (DivideByZeroException)
-                {
-                    meanForeground = subSumF / 1;
-                }
-                
-
-                //varianceForeground
-                double subSumFloatF = 0;
-                for (int i = T; i < 256; i++)
-                {
-                    subSumFloatF += (Math.Pow(i - meanForeground, 2)) * histogram[i];
-                }
-
-                try
-                {
-                    varianceForeground = subSumFloatF / pixelsFromThresholdTo255;
-                }
-                catch (DivideByZeroException)
-                {
-                    varianceForeground = subSumFloatF / 1;
-                }
-                
-
-                withinClassVariance = weightBackground * varianceBackground + weightForeground * varianceForeground;
-                if (withinClassVariance < minClassVariance)
+                double classVariance = CalculateClassVariance(ref histogram, T);
+                if (classVariance < minClassVariance)
                 {
                     threshold = T;
-                    minClassVariance = withinClassVariance;
+                    minClassVariance = classVariance;
                 }
             }
 
             MessageBox.Show($"Znaleziony optymalny próg metodą Otsu wynosi {threshold}.");
 
             ThresholdSpinValue.Value = (byte)threshold;
+        }
+
+        public double CalculateClassVariance(ref int[] p, int T)
+        {
+            int weightBackground = CalculateWeightBackground(ref p, T);
+            int weightForeground = CalculateWeightForeground(ref p, T);
+
+            double meanBackground = CalculateMeanBackground(ref p, T);
+            double meanForeground = CalculateMeanForeground(ref p, T);
+
+            double standardDeviationBackground = CalculateStandardDeviationBackground(ref p, T, weightBackground, meanBackground);
+            double standardDeviationForeground = CalculateStandardDeviationForeground(ref p, T, weightForeground, meanForeground);
+
+            double classStandardDeviation = weightForeground * Math.Pow(standardDeviationForeground, 2) + weightBackground * Math.Pow(standardDeviationBackground, 2);
+
+            return classStandardDeviation;
+        }
+
+        public int CalculateWeightBackground(ref int[] p, int T)
+        {
+            int sum = 0;
+            for (int i = 0; i < T; i++)
+            {
+                sum += p[i];
+            }
+            return sum;
+        }
+
+        public int CalculateWeightForeground(ref int[] p, int T)
+        {
+            int sum = 0;
+            for (int i = T; i < p.Length; i++)
+            {
+                sum += p[i];
+            }
+            return sum;
+        }
+
+        public double CalculateMeanBackground(ref int[]p, int T)
+        {
+            if (T == 0)
+                return 0;
+
+            int sum = CalculateWeightBackground(ref p, T);
+            double mean = sum / T;
+            return mean;
+        }
+
+        public double CalculateMeanForeground(ref int[]p , int T)
+        {
+            int sum = CalculateWeightForeground(ref p, T);
+            double mean = sum / (p.Length - T);
+            return mean;
+        }
+
+        public double CalculateStandardDeviationBackground(ref int[]p, int T, int weightBackground, double meanBackground)
+        {
+            double standardDeviation = 0;
+            for (int i = 0; i < T; i++)
+            {
+                standardDeviation += (p[i]*(Math.Pow(i - meanBackground,2))/weightBackground);
+            }
+
+            return standardDeviation;
+        }
+
+        public double CalculateStandardDeviationForeground(ref int[] p, int T, int weightForeground, double meanForeground)
+        {
+            double standardDeviation = 0;
+            for (int i = T; i < p.Length; i++)
+            {
+                standardDeviation += (p[i] * (Math.Pow(i - meanForeground, 2)) / weightForeground);
+            }
+
+            return standardDeviation;
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)

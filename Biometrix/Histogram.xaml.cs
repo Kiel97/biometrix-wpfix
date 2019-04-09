@@ -19,11 +19,6 @@ namespace Biometrix
     /// </summary>
     public partial class Histogram : Window
     {
-        enum HistogramColorMode
-        {
-            GRAYSCALE, RED, GREEN, BLUE
-        }
-
         private int[] redHistogram;
         private int[] greenHistogram;
         private int[] blueHistogram;
@@ -31,10 +26,10 @@ namespace Biometrix
 
         public Histogram(byte[] imagePixels, bool grayScale)
         {
-            redHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.RED);
-            greenHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.GREEN);
-            blueHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.BLUE);
-            averagedHistogram = GetHistogramFromByteArray(imagePixels, HistogramColorMode.GRAYSCALE);
+            redHistogram = HistogramCreator.GetHistogramFromByteArray(imagePixels, HistogramCreator.ColorMode.RED);
+            greenHistogram = HistogramCreator.GetHistogramFromByteArray(imagePixels, HistogramCreator.ColorMode.GREEN);
+            blueHistogram = HistogramCreator.GetHistogramFromByteArray(imagePixels, HistogramCreator.ColorMode.BLUE);
+            averagedHistogram = HistogramCreator.GetHistogramFromByteArray(imagePixels, HistogramCreator.ColorMode.GRAYSCALE);
 
             InitializeComponent();
 
@@ -70,35 +65,6 @@ namespace Biometrix
             }
 
             HistogramChart.DisplayHistogram(histogram);
-        }
-
-        private int[] GetHistogramFromByteArray(byte[] pixels, HistogramColorMode colorMode)
-        {
-            int[] histogram = new int[256];
-
-            for (int j = 0; j < pixels.Length; j += 4)
-            {
-                int value;
-                switch (colorMode)
-                {
-                    case HistogramColorMode.RED:
-                        value = pixels[j + 2];
-                        break;
-                    case HistogramColorMode.GREEN:
-                        value = pixels[j + 1];
-                        break;
-                    case HistogramColorMode.BLUE:
-                        value = pixels[j];
-                        break;
-                    case HistogramColorMode.GRAYSCALE:
-                        value = (int)(pixels[j + 2] + pixels[j + 1] + pixels[j]) / 3;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-                histogram[value] += 1;
-            }
-            return histogram;
         }
     }
 }

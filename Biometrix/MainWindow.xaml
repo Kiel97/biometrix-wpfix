@@ -24,7 +24,10 @@
                 <Separator/>
                 <MenuItem Name="ConvertToGrayMenuItem" Header="Zamień na skalę szarości" Click="ConvertToGrayMenuItem_Click"/>
                 <Separator/>
-                <MenuItem Name="ChangeBinarizationMenuItem" Header="Binaryzacja..." Click="ChangeBinarizationMenuItem_Click"/>
+                <MenuItem Header="Progowanie">
+                    <MenuItem Name="ChangeBinarizationMenuItem" Header="Binaryzacja..." Click="ChangeBinarizationMenuItem_Click"/>
+                    <MenuItem Name="NiblackBinarizationMenuItem"  Header="Niblack" IsEnabled="False"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">

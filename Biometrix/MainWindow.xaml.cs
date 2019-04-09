@@ -357,5 +357,28 @@ namespace Biometrix
                 ModifiedImage.Source = modifiedBitmap;
             }
         }
+
+        private void NiblackBinarizationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!grayScale)
+            {
+                MessageBoxResult result = MessageBox.Show("Proces binaryzacji można przeprowadzić tylko na obrazach czarnobiałych. Czy chcesz przekonwertować bitmapę do skali szarości?", "Wymaga czarnobiała bitmapa", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (result == MessageBoxResult.No)
+                    return;
+
+                ConvertImageToGrayscale();
+            }
+
+            NiblackBinarization niblackbinarization = new NiblackBinarization(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap);
+            if (niblackbinarization.ShowDialog() == true)
+            {
+                modifiedPixels = niblackbinarization.modifiedPixels;
+
+                BitmapSource bitmap = BitmapImage.Create((int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, 96, 96, PixelFormats.Bgr32, null, modifiedPixels, stride);
+                modifiedBitmap = new WriteableBitmap(bitmap);
+
+                ModifiedImage.Source = modifiedBitmap;
+            }
+        }
     }
 }

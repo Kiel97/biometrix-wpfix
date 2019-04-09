@@ -26,7 +26,7 @@
                 <Separator/>
                 <MenuItem Header="Progowanie">
                     <MenuItem Name="ChangeBinarizationMenuItem" Header="Binaryzacja..." Click="ChangeBinarizationMenuItem_Click"/>
-                    <MenuItem Name="NiblackBinarizationMenuItem"  Header="Niblack" IsEnabled="False"/>
+                    <MenuItem Name="NiblackBinarizationMenuItem"  Header="Niblack" Click="NiblackBinarizationMenuItem_Click" />
                 </MenuItem>
             </MenuItem>
         </Menu>

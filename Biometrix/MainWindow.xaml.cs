@@ -369,7 +369,7 @@ namespace Biometrix
                 ConvertImageToGrayscale();
             }
 
-            NiblackBinarization niblackbinarization = new NiblackBinarization(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap);
+            NiblackBinarization niblackbinarization = new NiblackBinarization(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap, bytesPerPixel);
             if (niblackbinarization.ShowDialog() == true)
             {
                 modifiedPixels = niblackbinarization.modifiedPixels;

@@ -69,9 +69,9 @@ namespace Biometrix
                     byte t = CalculateLocalThresholdNiblack(i,j,windowSize,k);
 
                     int index = i * bytesPerPixel + j * stride;
-                    p[index] = t;
-                    p[index + 1] = t;
-                    p[index + 2] = t;
+                    p[index] = (pixels[index] > t) ? (byte)255 : (byte)0;
+                    p[index + 1] = (pixels[index+1] > t) ? (byte)255 : (byte)0;
+                    p[index + 2] = (pixels[index+2] > t) ? (byte)255 : (byte)0;
                     p[index + 3] = pixels[index + 3];
                 }
             }
@@ -81,8 +81,7 @@ namespace Biometrix
 
         private byte CalculateLocalThresholdNiblack(int x, int y, int windowSize, double k)
         {
-            List<int> neighbouringIndexesList = GetNeighbouringIndexesList(x, y, windowSize);
-            List<byte> neighbouringGrayValues = GetColorValuesFromNeighbouringIndexes(neighbouringIndexesList);
+            List<byte> neighbouringGrayValues = GetNeighbouringValuesList(x, y, windowSize); 
 
             double meanBlockValue = GetMeanOfBlockValue(neighbouringGrayValues);
             double standardDeviationBlockValue = GetStandardDeviationOfBlockValue(neighbouringGrayValues, meanBlockValue);
@@ -90,9 +89,9 @@ namespace Biometrix
             return (byte)(meanBlockValue + k * standardDeviationBlockValue);
         }
 
-        private List<int> GetNeighbouringIndexesList(int x, int y, int windowSize)
+        private List<byte> GetNeighbouringValuesList(int x, int y, int windowSize)
         {
-            List<int> neighbouringIndexes = new List<int>();
+            List<byte> neighbouringValues = new List<byte>();
             int d = windowSize/2;
             int minX, minY, maxX, maxY;
 
@@ -107,22 +106,10 @@ namespace Biometrix
                 {
                     if (i < 0 || j < 0 || i >= height || j >= width)
                         continue;
-                    neighbouringIndexes.Add(i * bytesPerPixel + j * stride);
+                    neighbouringValues.Add(pixels[i * bytesPerPixel + j * stride]);
                 }
             }
-            return neighbouringIndexes;
-        }
-
-        private List<byte> GetColorValuesFromNeighbouringIndexes(List<int> neighbouringIndexes)
-        {
-            List<byte> colorsList = new List<byte>();
-
-            foreach (int index in neighbouringIndexes)
-            {
-                colorsList.Add(pixels[index]);
-            }
-
-            return colorsList;
+            return neighbouringValues;
         }
 
         private double GetMeanOfBlockValue(List<byte> neighbouringColors)

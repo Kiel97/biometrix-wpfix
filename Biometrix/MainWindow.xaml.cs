@@ -307,11 +307,78 @@ namespace Biometrix
             {
                 modifiedPixels = brightness.modifiedPixels;
 
-                BitmapSource bitmap = BitmapImage.Create((int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, 96, 96, PixelFormats.Bgr32, null, modifiedPixels, stride);
-                modifiedBitmap = new WriteableBitmap(bitmap);
-
-                ModifiedImage.Source = modifiedBitmap;
+                UpdateModifiedImageSource();
             }
+        }
+
+        private void StretchHistogramMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Czy chcesz rozciągnąć histogram dla podanego obrazka?", "Rozciągnięcie histogramu", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+                StretchHistogram(5, 253);
+        }
+
+        private void StretchHistogram(int a, int b)
+        {
+            if (a > b)
+                return;
+            int minRed = 255;
+            int minGreen = 255;
+            int minBlue = 255;
+            int maxRed = 0;
+            int maxGreen = 0;
+            int maxBlue = 0;
+            
+            int[] redHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.RED);
+            int[] greenHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.GREEN);
+            int[] blueHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.BLUE);
+
+            for (int i = 0; i < 256; i++)
+            {
+                if (i >= a)
+                {
+                    if (redHistogram[i] > 0 && i < minRed)
+                        minRed = i;
+
+                    if (greenHistogram[i] > 0 && i < minGreen)
+                        minGreen = i;
+
+                    if (blueHistogram[i] > 0 && i < minBlue)
+                        minBlue = i;
+                }
+
+                if (i <= b)
+                {
+                    if (redHistogram[i] > 0 && i > maxRed)
+                        maxRed = i;
+
+                    if (greenHistogram[i] > 0 && i > maxGreen)
+                        maxGreen = i;
+
+                    if (blueHistogram[i] > 0 && i > maxBlue)
+                        maxBlue = i;
+                }
+            }
+
+            byte[] LUTred = new byte[256];
+            byte[] LUTgreen = new byte[256];
+            byte[] LUTblue = new byte[256];
+
+            for (int i = 0; i < 256; i++)
+            {
+                LUTred[i] = (byte)(255f / (maxRed - minRed) * (i/minRed));
+                LUTgreen[i] = (byte)(255f / (maxGreen - minGreen) * (i/minGreen));
+                LUTblue[i] = (byte)(255f / (maxBlue - minBlue) * (i/minBlue));
+            }
+
+            for (int i = 0; i < modifiedPixels.Length; i += 4)
+            {
+                modifiedPixels[i + 2] = LUTred[modifiedPixels[i + 2]];
+                modifiedPixels[i + 1] = LUTgreen[modifiedPixels[i + 1]];
+                modifiedPixels[i] = LUTblue[modifiedPixels[i]];
+            }
+
+            UpdateModifiedImageSource();
         }
 
         private void ConvertToGrayMenuItem_Click(object sender, RoutedEventArgs e)
@@ -351,10 +418,7 @@ namespace Biometrix
             {
                 modifiedPixels = binarization.modifiedPixels;
 
-                BitmapSource bitmap = BitmapImage.Create((int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, 96, 96, PixelFormats.Bgr32, null, modifiedPixels, stride);
-                modifiedBitmap = new WriteableBitmap(bitmap);
-
-                ModifiedImage.Source = modifiedBitmap;
+                UpdateModifiedImageSource();
             }
         }
 
@@ -374,11 +438,16 @@ namespace Biometrix
             {
                 modifiedPixels = niblackbinarization.modifiedPixels;
 
-                BitmapSource bitmap = BitmapImage.Create((int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, 96, 96, PixelFormats.Bgr32, null, modifiedPixels, stride);
-                modifiedBitmap = new WriteableBitmap(bitmap);
-
-                ModifiedImage.Source = modifiedBitmap;
+                UpdateModifiedImageSource();
             }
+        }
+
+        private void UpdateModifiedImageSource()
+        {
+            BitmapSource bitmap = BitmapImage.Create((int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, 96, 96, PixelFormats.Bgr32, null, modifiedPixels, stride);
+            modifiedBitmap = new WriteableBitmap(bitmap);
+
+            ModifiedImage.Source = modifiedBitmap;
         }
     }
 }

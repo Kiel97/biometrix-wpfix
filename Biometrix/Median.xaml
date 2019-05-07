@@ -1,0 +1,33 @@
+﻿<Window x:Class="Biometrix.Median"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Biometrix"
+        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        Title="Filtr medianowy" Height="450" Width="550">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Image Margin="5" Name="PreviewImage" Grid.Column="0" Grid.Row="0" Stretch="Fill" RenderOptions.BitmapScalingMode="NearestNeighbor"></Image>
+        <GroupBox Grid.Column="1" Grid.Row="0" Header="Rozmiar ramki">
+            <StackPanel>
+                <RadioButton Name="Frame3by3RadioBtn" IsChecked="True">3x3</RadioButton>
+                <RadioButton Name="Frame5by5RadioBtn">5x5</RadioButton>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <Button Name="PreviewButton" Margin="3" Padding="3" Click="PreviewButton_Click">Podgląd</Button>
+            <Button Name="ConfirmButton" Margin="3" Padding="3" Click="ConfirmButton_Click">Zatwierdź</Button>
+            <Button Name="CancelButton" Margin="3" Padding="3" Click="CancelButton_Click">Anuluj</Button>
+        </StackPanel>
+    </Grid>
+</Window>

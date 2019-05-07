@@ -88,11 +88,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Convolution.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Histogram.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HistogramColumnChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Kuwahar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -113,6 +121,9 @@
     <Compile Include="Brightness.xaml.cs">
       <DependentUpon>Brightness.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Convolution.xaml.cs">
+      <DependentUpon>Convolution.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Histogram.xaml.cs">
       <DependentUpon>Histogram.xaml</DependentUpon>
     </Compile>
@@ -120,16 +131,26 @@
       <DependentUpon>HistogramColumnChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="HistogramCreator.cs" />
+    <Compile Include="Kuwahar.xaml.cs">
+      <DependentUpon>Kuwahar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Median.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NiblackBinarization.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Median.xaml.cs">
+      <DependentUpon>Median.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NiblackBinarization.xaml.cs">
       <DependentUpon>NiblackBinarization.xaml</DependentUpon>
     </Compile>

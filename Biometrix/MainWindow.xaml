@@ -30,9 +30,9 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Name="FiltersMenuItem" Header="Filtry" IsEnabled="False">
-                <MenuItem Name="ConvolutionMenuItem" Header="Konwolucyjny" />
-                <MenuItem Name="KuwaharMenuItem" Header="Kuwahara" />
-                <MenuItem Name="MedianMenuItem" Header="Medianowy" />
+                <MenuItem Name="ConvolutionMenuItem" Header="Konwolucyjny" Click="ConvolutionMenuItem_Click" />
+                <MenuItem Name="KuwaharMenuItem" Header="Kuwahara" Click="KuwaharMenuItem_Click" />
+                <MenuItem Name="MedianMenuItem" Header="Medianowy" Click="MedianMenuItem_Click" />
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">

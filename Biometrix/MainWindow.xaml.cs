@@ -450,5 +450,38 @@ namespace Biometrix
 
             ModifiedImage.Source = modifiedBitmap;
         }
+
+        private void ConvolutionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Convolution convolution = new Convolution(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap, bytesPerPixel);
+            if (convolution.ShowDialog() == true)
+            {
+                //modifiedPixels = convolution.modifiedPixels;
+
+                //UpdateModifiedImageSource();
+            }
+        }
+
+        private void KuwaharMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Kuwahar kuwahar = new Kuwahar(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap, bytesPerPixel);
+            if (kuwahar.ShowDialog() == true)
+            {
+            //    modifiedPixels = kuwahar.modifiedPixels;
+
+            //    UpdateModifiedImageSource();
+            }
+        }
+
+        private void MedianMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Median median = new Median(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap, bytesPerPixel);
+            if (median.ShowDialog() == true)
+            {
+            //    modifiedPixels = median.modifiedPixels;
+
+            //    UpdateModifiedImageSource();
+            }
+        }
     }
 }

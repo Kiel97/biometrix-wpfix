@@ -96,6 +96,7 @@ namespace Biometrix
 
                 SaveImageMenuItem.IsEnabled = true;
                 ColorSectionMenuItem.IsEnabled = true;
+                FiltersMenuItem.IsEnabled = true;
             }
         }
 

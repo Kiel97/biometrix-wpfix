@@ -29,6 +29,11 @@
                     <MenuItem Name="NiblackBinarizationMenuItem"  Header="Niblack" Click="NiblackBinarizationMenuItem_Click" />
                 </MenuItem>
             </MenuItem>
+            <MenuItem Name="FiltersMenuItem" Header="Filtry" IsEnabled="False">
+                <MenuItem Name="ConvolutionMenuItem" Header="Konwolucyjny" />
+                <MenuItem Name="KuwaharMenuItem" Header="Kuwahara" />
+                <MenuItem Name="MedianMenuItem" Header="Medianowy" />
+            </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Name="ImageStatusBarItem">Gotowe</StatusBarItem>

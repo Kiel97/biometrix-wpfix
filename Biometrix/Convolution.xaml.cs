@@ -68,6 +68,9 @@ namespace Biometrix
 
         private void ConvoluteWithFilter()
         {
+            int windowsize = 3;
+            int radius = windowsize / 2;
+
             byte[] p = new byte[pixels.Length];
             for (int i = 0; i < height; i++)
             {
@@ -75,7 +78,7 @@ namespace Biometrix
                 {
                     int index = i * bytesPerPixel + j * stride;
 
-                    if (IsImageBorder(i, j, height, width, 1))
+                    if (IsImageBorder(i, j, height, width, radius))
                     {
                         p[index] = 0;
                         p[index + 1] = 0;
@@ -83,9 +86,10 @@ namespace Biometrix
                     }
                     else
                     {
-                        p[index] = pixels[index];
-                        p[index + 1] = pixels[index + 1];
-                        p[index + 2] = pixels[index + 2];
+                        int[,] neighbours = GetNeighbouringPixels(i, j, windowsize);
+                        p[index] = pixels[neighbours[1,1]];
+                        p[index + 1] = pixels[neighbours[1,1] + 1];
+                        p[index + 2] = pixels[neighbours[1,1] + 2];
                     }
 
                     p[index + 3] = pixels[index + 3];
@@ -93,6 +97,24 @@ namespace Biometrix
             }
 
             UpdatePreviewImage(p);
+        }
+
+        private int[,] GetNeighbouringPixels(int x, int y, int windowsize)
+        {
+            int[,] neighbours = new int[windowsize, windowsize];
+            int radius = windowsize / 2;
+
+            neighbours[0, 0] = (x - radius) * bytesPerPixel + (y - radius) * stride;
+            neighbours[0, 1] = (x - radius) * bytesPerPixel + y * stride;
+            neighbours[0, 2] = (x - radius) * bytesPerPixel + (y + radius) * stride;
+            neighbours[1, 0] = x * bytesPerPixel + (y - radius) * stride;
+            neighbours[1, 1] = x * bytesPerPixel + y * stride;
+            neighbours[1, 2] = x * bytesPerPixel + (y + radius) * stride;
+            neighbours[2, 0] = (x + radius) * bytesPerPixel + (y - radius) * stride;
+            neighbours[2, 1] = (x + radius) * bytesPerPixel + y * stride;
+            neighbours[2, 2] = (x + radius) * bytesPerPixel + (y + radius) * stride;
+
+            return neighbours;
         }
 
         private bool IsImageBorder(int i, int j, int height, int width, int radius)

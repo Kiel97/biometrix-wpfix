@@ -66,6 +66,40 @@ namespace Biometrix
             modifiedPixels = pixels;
         }
 
+        private void ConvoluteWithFilter()
+        {
+            byte[] p = new byte[pixels.Length];
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    int index = i * bytesPerPixel + j * stride;
+
+                    if (IsImageBorder(i, j, height, width, 1))
+                    {
+                        p[index] = 0;
+                        p[index + 1] = 0;
+                        p[index + 2] = 0;
+                    }
+                    else
+                    {
+                        p[index] = pixels[index];
+                        p[index + 1] = pixels[index + 1];
+                        p[index + 2] = pixels[index + 2];
+                    }
+
+                    p[index + 3] = pixels[index + 3];
+                }
+            }
+
+            UpdatePreviewImage(p);
+        }
+
+        private bool IsImageBorder(int i, int j, int height, int width, int radius)
+        {
+            return i < radius || j < radius || i >= height - radius || j >= width - radius;
+        }
+
         private void PreviewButton_Click(object sender, RoutedEventArgs e)
         {
             ConvoluteWithFilter();
@@ -81,35 +115,6 @@ namespace Biometrix
         {
             this.DialogResult = false;
             this.Close();
-        }
-
-        private void ConvoluteWithFilter()
-        {
-            byte[] p = new byte[pixels.Length];
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    int index = i * bytesPerPixel + j * stride;
-
-                    if (i == 0 || j == 0 || i == height - 1 || j == width - 1)
-                    {
-                        p[index] = 0;
-                        p[index + 1] = 0;
-                        p[index + 2] = 0;
-                    }
-                    else
-                    {
-                        p[index] = pixels[index];
-                        p[index + 1] = pixels[index + 1];
-                        p[index + 2] = pixels[index + 2];
-                    }
-                    
-                    p[index + 3] = pixels[index + 3];
-                }
-            }
-
-            UpdatePreviewImage(p);
         }
 
         private void FilterTypeRadio_Checked(object sender, RoutedEventArgs e)

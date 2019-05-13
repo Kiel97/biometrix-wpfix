@@ -32,6 +32,49 @@ namespace Biometrix
 
         FilterType filterType = FilterType.CUSTOM;
 
+        //http://www.algorytm.org/przetwarzanie-obrazow/filtrowanie-obrazow.html
+        //-1 -1 -1
+        // 0  0  0
+        // 1  1  1
+        readonly int[,] PREWITT_HOR_FRAME = {{-1,  0,  1},
+                                             {-1,  0,  1},
+                                             {-1,  0,  1}};
+
+        // 1  0 -1
+        // 1  0 -1
+        // 1  0 -1
+        readonly int[,] PREWITT_VER_FRAME = {{ 1,  1,  1},
+                                             { 0,  0,  0},
+                                             {-1, -1, -1}};
+
+        // 1  2  1
+        // 0  0  0
+        //-1 -2 -1
+        readonly int[,] SOBEL_HOR_FRAME = {{ 1,  0, -1},
+                                           { 2,  0, -2},
+                                           { 1,  0, -1}};
+
+        // 1  0 -1
+        // 2  0 -2
+        // 1  0 -1
+        readonly int[,] SOBEL_VER_FRAME = {{ 1,  2,  1},
+                                           { 0,  0,  0},
+                                           {-1, -2, -1}};
+
+        // 0 -1  0
+        //-1  4 -1
+        // 0 -1  0
+        readonly int[,] LAPLACE_FRAME = {{ 0, -1,  0},
+                                         {-1,  4, -1},
+                                         { 0, -1,  0}};
+
+        // 1  1  1
+        // 1 -2 -1
+        // 1 -1 -1
+        readonly int[,] CORNER_FRAME = {{ 1,  1,  1},
+                                        { 1, -2, -1},
+                                        { 1, -1, -1}};
+
         public Convolution(byte[] pixels, int stride, int width, int height, WriteableBitmap modifiedBitmap, int bytesPerPixel)
         {
             InitializeComponent();

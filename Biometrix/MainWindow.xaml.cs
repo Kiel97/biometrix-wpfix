@@ -456,9 +456,9 @@ namespace Biometrix
             Convolution convolution = new Convolution(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap, bytesPerPixel);
             if (convolution.ShowDialog() == true)
             {
-                //modifiedPixels = convolution.modifiedPixels;
+                modifiedPixels = convolution.modifiedPixels;
 
-                //UpdateModifiedImageSource();
+                UpdateModifiedImageSource();
             }
         }
 

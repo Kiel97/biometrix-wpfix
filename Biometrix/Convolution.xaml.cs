@@ -78,13 +78,7 @@ namespace Biometrix
         public Convolution(byte[] pixels, int stride, int width, int height, WriteableBitmap modifiedBitmap, int bytesPerPixel)
         {
             InitializeComponent();
-            PrewittVerRadio.Checked += FilterTypeRadio_Checked;
-            PrewittHorRadio.Checked += FilterTypeRadio_Checked;
-            SobelVerRadio.Checked += FilterTypeRadio_Checked;
-            SobelHorRadio.Checked += FilterTypeRadio_Checked;
-            LaplaceRadio.Checked += FilterTypeRadio_Checked;
-            CornerDetectRadio.Checked += FilterTypeRadio_Checked;
-            CustomRadio.Checked += FilterTypeRadio_Checked;
+            ConnectEvents();
 
             previewBitmap = new WriteableBitmap(modifiedBitmap);
 
@@ -97,6 +91,17 @@ namespace Biometrix
             modifiedPixels = new byte[pixels.Length];
 
             UpdatePreviewImage(pixels);
+        }
+
+        private void ConnectEvents()
+        {
+            PrewittVerRadio.Checked += FilterTypeRadio_Checked;
+            PrewittHorRadio.Checked += FilterTypeRadio_Checked;
+            SobelVerRadio.Checked += FilterTypeRadio_Checked;
+            SobelHorRadio.Checked += FilterTypeRadio_Checked;
+            LaplaceRadio.Checked += FilterTypeRadio_Checked;
+            CornerDetectRadio.Checked += FilterTypeRadio_Checked;
+            CustomRadio.Checked += FilterTypeRadio_Checked;
         }
 
         private void UpdatePreviewImage(byte[] pixels)

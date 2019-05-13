@@ -135,9 +135,11 @@ namespace Biometrix
                     else
                     {
                         int[,] neighbours = GetNeighbouringPixelIndexes(i, j, windowsize);
-                        p[index] = pixels[neighbours[1,1]];
-                        p[index + 1] = pixels[neighbours[1,1] + 1];
-                        p[index + 2] = pixels[neighbours[1,1] + 2];
+
+                        for (int colorOffset = 0; colorOffset < 3; colorOffset++)
+                        {//0 - niebieski, 1 - zielony, 2 - czerwony, 3 - alfa
+                            p[index + colorOffset] = pixels[neighbours[1, 1] + colorOffset];
+                        }
                     }
 
                     p[index + 3] = pixels[index + 3];

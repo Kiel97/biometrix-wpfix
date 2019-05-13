@@ -14,9 +14,11 @@ using System.Windows.Shapes;
 
 namespace Biometrix
 {
-    /// <summary>
-    /// Logika interakcji dla klasy Convolution.xaml
-    /// </summary>
+    public enum FilterType
+    {
+        PREWITT_H, PREWITT_V, SOBEL_H, SOBEL_V, LAPLACE, CORNER, CUSTOM
+    }
+
     public partial class Convolution : Window
     {
         public byte[] modifiedPixels;
@@ -28,9 +30,18 @@ namespace Biometrix
         int width;
         int height;
 
+        FilterType filterType = FilterType.CUSTOM;
+
         public Convolution(byte[] pixels, int stride, int width, int height, WriteableBitmap modifiedBitmap, int bytesPerPixel)
         {
             InitializeComponent();
+            PrewittVerRadio.Checked += FilterTypeRadio_Checked;
+            PrewittHorRadio.Checked += FilterTypeRadio_Checked;
+            SobelVerRadio.Checked += FilterTypeRadio_Checked;
+            SobelHorRadio.Checked += FilterTypeRadio_Checked;
+            LaplaceRadio.Checked += FilterTypeRadio_Checked;
+            CornerDetectRadio.Checked += FilterTypeRadio_Checked;
+            CustomRadio.Checked += FilterTypeRadio_Checked;
 
             previewBitmap = new WriteableBitmap(modifiedBitmap);
 
@@ -57,7 +68,7 @@ namespace Biometrix
 
         private void PreviewButton_Click(object sender, RoutedEventArgs e)
         {
-            // Wywołanie głównej funkcji
+            ConvoluteWithFilter();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
@@ -70,6 +81,46 @@ namespace Biometrix
         {
             this.DialogResult = false;
             this.Close();
+        }
+
+        private void ConvoluteWithFilter()
+        {
+            Console.WriteLine(filterType);
+        }
+
+        private void FilterTypeRadio_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+
+            CustomFrameGrid.IsEnabled = false;
+
+            switch (radioButton.Name)
+            {
+                case "PrewittVerRadio":
+                    filterType = FilterType.PREWITT_V;
+                    break;
+                case "PrewittHorRadio":
+                    filterType = FilterType.PREWITT_H;
+                    break;
+                case "SobelVerRadio":
+                    filterType = FilterType.SOBEL_V;
+                    break;
+                case "SobelHorRadio":
+                    filterType = FilterType.SOBEL_H;
+                    break;
+                case "LaplaceRadio":
+                    filterType = FilterType.LAPLACE;
+                    break;
+                case "CornerDetectRadio":
+                    filterType = FilterType.CORNER;
+                    break;
+                case "CustomRadio":
+                    filterType = FilterType.CUSTOM;
+                    CustomFrameGrid.IsEnabled = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Nie uwzględniono radioButtona innego, niż wyżej zdefiniowane.");
+            }
         }
     }
 }

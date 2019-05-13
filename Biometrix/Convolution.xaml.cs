@@ -86,7 +86,7 @@ namespace Biometrix
                     }
                     else
                     {
-                        int[,] neighbours = GetNeighbouringPixels(i, j, windowsize);
+                        int[,] neighbours = GetNeighbouringPixelIndexes(i, j, windowsize);
                         p[index] = pixels[neighbours[1,1]];
                         p[index + 1] = pixels[neighbours[1,1] + 1];
                         p[index + 2] = pixels[neighbours[1,1] + 2];
@@ -99,20 +99,29 @@ namespace Biometrix
             UpdatePreviewImage(p);
         }
 
-        private int[,] GetNeighbouringPixels(int x, int y, int windowsize)
+        private int[,] GetNeighbouringPixelIndexes(int x, int y, int windowsize)
         {
             int[,] neighbours = new int[windowsize, windowsize];
             int radius = windowsize / 2;
 
-            neighbours[0, 0] = (x - radius) * bytesPerPixel + (y - radius) * stride;
-            neighbours[0, 1] = (x - radius) * bytesPerPixel + y * stride;
-            neighbours[0, 2] = (x - radius) * bytesPerPixel + (y + radius) * stride;
-            neighbours[1, 0] = x * bytesPerPixel + (y - radius) * stride;
+            for (int i = 0; i < windowsize; i++)
+            {
+                for (int j = 0; j < windowsize; j++)
+                {
+                    neighbours[i, j] = (x - radius + i) * bytesPerPixel + (y - radius + j) * stride;
+                }
+            }
+
+            /*Przykład:
+            neighbours[0, 0] = (x - 1) * bytesPerPixel + (y - 1) * stride;
+            neighbours[0, 1] = (x - 1) * bytesPerPixel + y * stride;
+            neighbours[0, 2] = (x - 1) * bytesPerPixel + (y + 1) * stride;
+            neighbours[1, 0] = x * bytesPerPixel + (y - 1) * stride;
             neighbours[1, 1] = x * bytesPerPixel + y * stride;
-            neighbours[1, 2] = x * bytesPerPixel + (y + radius) * stride;
-            neighbours[2, 0] = (x + radius) * bytesPerPixel + (y - radius) * stride;
-            neighbours[2, 1] = (x + radius) * bytesPerPixel + y * stride;
-            neighbours[2, 2] = (x + radius) * bytesPerPixel + (y + radius) * stride;
+            neighbours[1, 2] = x * bytesPerPixel + (y + 1) * stride;
+            neighbours[2, 0] = (x + 1) * bytesPerPixel + (y - 1) * stride;
+            neighbours[2, 1] = (x + 1) * bytesPerPixel + y * stride;
+            neighbours[2, 2] = (x + 1) * bytesPerPixel + (y + 1) * stride;*/
 
             return neighbours;
         }

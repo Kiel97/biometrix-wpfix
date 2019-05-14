@@ -105,9 +105,9 @@ namespace Biometrix
             int meanBottomRight = CalculateMeanValue(ref BR, offset);
 
             double varianceTopLeft = CalculateVarianceValue(ref TL, meanTopLeft, offset);
-            double varianceTopRight = CalculateVarianceValue(ref TR, meanTopLeft, offset);
-            double varianceBottomLeft = CalculateVarianceValue(ref BL, meanTopLeft, offset);
-            double varianceBottomRight = CalculateVarianceValue(ref BR, meanTopLeft, offset);
+            double varianceTopRight = CalculateVarianceValue(ref TR, meanTopRight, offset);
+            double varianceBottomLeft = CalculateVarianceValue(ref BL, meanBottomLeft, offset);
+            double varianceBottomRight = CalculateVarianceValue(ref BR, meanBottomRight, offset);
 
             // Tutaj powinno być wybieranie średniej wartości dla regionu o najmniejszej wariancji
             return (byte)Math.Abs(0);

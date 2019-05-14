@@ -109,8 +109,51 @@ namespace Biometrix
             double varianceBottomLeft = CalculateVarianceValue(ref BL, meanBottomLeft, offset);
             double varianceBottomRight = CalculateVarianceValue(ref BR, meanBottomRight, offset);
 
-            // Tutaj powinno być wybieranie średniej wartości dla regionu o najmniejszej wariancji
-            return (byte)Math.Abs(0);
+            double[] variances = new double[4];
+            variances[0] = varianceTopLeft;
+            variances[1] = varianceTopRight;
+            variances[2] = varianceBottomLeft;
+            variances[3] = varianceBottomRight;
+
+            int selectedRegion = GetSmallestVarianceIndex(ref variances);
+            int selectedValue;
+
+            switch (selectedRegion)
+            {
+                case 0:
+                    selectedValue = meanTopLeft;
+                    break;
+                case 1:
+                    selectedValue = meanTopRight;
+                    break;
+                case 2:
+                    selectedValue = meanBottomLeft;
+                    break;
+                case 3:
+                    selectedValue = meanBottomRight;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Błędnie zwrócony indeks z tablicy wariancji.");
+            }
+
+            return (byte)Math.Abs(selectedValue);
+        }
+
+        private int GetSmallestVarianceIndex(ref double[] variances)
+        {
+            int index = 0;
+            double value = Double.MaxValue;
+
+            for (int i = 0; i < variances.Length; i++)
+            {
+                if (variances[i] < value)
+                {
+                    index = i;
+                    value = variances[i];
+                }
+            }
+
+            return index;
         }
 
         private int CalculateMeanValue(ref int[,] neighbours, int offset)

@@ -119,6 +119,8 @@ namespace Biometrix
             int windowsize = 3;
             int radius = windowsize / 2;
 
+            int[,] frame = GetFrame();
+
             byte[] p = new byte[pixels.Length];
             for (int i = 0; i < height; i++)
             {
@@ -138,7 +140,9 @@ namespace Biometrix
 
                         for (int colorOffset = 0; colorOffset < 3; colorOffset++)
                         {//0 - niebieski, 1 - zielony, 2 - czerwony, 3 - alfa
-                            p[index + colorOffset] = pixels[neighbours[1, 1] + colorOffset];
+                            //byte pixelValue = pixels[neighbours[1, 1] + colorOffset];
+                            byte pixelValue = CalculateNewPixelValue(ref neighbours, ref frame, colorOffset);
+                            p[index + colorOffset] = pixelValue;
                         }
                     }
 
@@ -147,6 +151,34 @@ namespace Biometrix
             }
 
             UpdatePreviewImage(p);
+        }
+
+        private bool IsImageBorder(int i, int j, int height, int width, int radius)
+        {
+            return i < radius || j < radius || i >= height - radius || j >= width - radius;
+        }
+
+        private int[,] GetFrame()
+        {
+            switch (filterType)
+            {   
+                case FilterType.PREWITT_H:
+                    return PREWITT_HOR_FRAME;
+                case FilterType.PREWITT_V:
+                    return PREWITT_VER_FRAME;
+                case FilterType.SOBEL_H:
+                    return SOBEL_HOR_FRAME;
+                case FilterType.SOBEL_V:
+                    return SOBEL_VER_FRAME;
+                case FilterType.LAPLACE:
+                    return LAPLACE_FRAME;
+                case FilterType.CORNER:
+                    return CORNER_FRAME;
+                case FilterType.CUSTOM:
+                    return new int[3, 3];
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private int[,] GetNeighbouringPixelIndexes(int x, int y, int windowsize)
@@ -176,9 +208,37 @@ namespace Biometrix
             return neighbours;
         }
 
-        private bool IsImageBorder(int i, int j, int height, int width, int radius)
+        private byte CalculateNewPixelValue(ref int[,] neighbours, ref int[,] frame, int offset)
         {
-            return i < radius || j < radius || i >= height - radius || j >= width - radius;
+            int pixelSum = CalculateWeightedSumOfPixel(ref neighbours, ref frame, offset);
+            int weightSum = CalculateSumOfWeight(ref frame);
+
+            return (byte)(pixelSum/weightSum);
+        }
+
+        private int CalculateWeightedSumOfPixel(ref int[,] neighbours, ref int[,] frame, int offset)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    sum += pixels[neighbours[i,j] + offset] * frame[i,j];
+
+            return sum;
+        }
+
+        private int CalculateSumOfWeight(ref int[,] frame)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    sum += frame[i, j];
+
+            if (sum == 0)
+                return 1;
+
+            return sum;
         }
 
         private void PreviewButton_Click(object sender, RoutedEventArgs e)

@@ -55,9 +55,90 @@ namespace Biometrix
             modifiedPixels = pixels;
         }
 
+        private void KuwaharFilter()
+        {
+            int windowsize = 5;
+            int radius = windowsize / 2;
+
+            int subwindowsize = 3;
+            int subradius = subwindowsize / 2;
+
+            byte[] p = new byte[pixels.Length];
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    int index = i * bytesPerPixel + j * stride;
+
+                    if (IsImageBorder(i, j, height, width, radius))
+                    {
+                        p[index] = 0;
+                        p[index + 1] = 0;
+                        p[index + 2] = 0;
+                    }
+                    else
+                    {
+                        int[,] neighbours = GetNeighbouringPixelIndexes(i, j, windowsize);
+
+                        int[,] neighboursTopLeft = GetSubNeighbouringPixelIndexes(ref neighbours, 0, 0, subwindowsize);
+                        int[,] neighboursTopRight = GetSubNeighbouringPixelIndexes(ref neighbours, 2, 0, subwindowsize);
+                        int[,] neighboursBottomLeft = GetSubNeighbouringPixelIndexes(ref neighbours, 0, 2, subwindowsize);
+                        int[,] neighboursBottomRight = GetSubNeighbouringPixelIndexes(ref neighbours, 2, 2, subwindowsize);
+
+                        for (int colorOffset = 0; colorOffset < 3; colorOffset++)
+                        {//0 - niebieski, 1 - zielony, 2 - czerwony, 3 - alfa
+                            //byte pixelValue = GetMedianPixel(ref neighbours, colorOffset);
+                            byte pixelValue = 0;
+                            p[index + colorOffset] = pixelValue;
+                        }
+                    }
+
+                    p[index + 3] = pixels[index + 3];
+                }
+            }
+
+            UpdatePreviewImage(p);
+        }
+
+        private int[,] GetSubNeighbouringPixelIndexes(ref int[,] neighbours, int startX, int startY, int windowsize)
+        {
+            int[,] subneighbours = new int[windowsize, windowsize];
+
+            for (int i = 0; i < windowsize; i++)
+            {
+                for (int j = 0; j < windowsize; j++)
+                {
+                    subneighbours[i, j] = neighbours[startX + i, startY + j];
+                }
+            }
+
+            return subneighbours;
+        }
+
+        private bool IsImageBorder(int i, int j, int height, int width, int radius)
+        {
+            return i < radius || j < radius || i >= height - radius || j >= width - radius;
+        }
+
+        private int[,] GetNeighbouringPixelIndexes(int x, int y, int windowsize)
+        {
+            int[,] neighbours = new int[windowsize, windowsize];
+            int radius = windowsize / 2;
+
+            for (int i = 0; i < windowsize; i++)
+            {
+                for (int j = 0; j < windowsize; j++)
+                {
+                    neighbours[i, j] = (x - radius + i) * bytesPerPixel + (y - radius + j) * stride;
+                }
+            }
+
+            return neighbours;
+        }
+
         private void PreviewButton_Click(object sender, RoutedEventArgs e)
         {
-            // Wywołanie głównej funkcji
+            KuwaharFilter();
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)

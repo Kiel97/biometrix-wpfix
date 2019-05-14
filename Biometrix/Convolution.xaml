@@ -21,10 +21,10 @@
         <GroupBox Grid.Column="1" Grid.Row="0" Header="Rodzaj">
             <StackPanel>
                 <StackPanel>
-                    <RadioButton Name="PrewittVerRadio">Poziomy Prewitt</RadioButton>
-                    <RadioButton Name="PrewittHorRadio">Pionowy Prewitt</RadioButton>
-                    <RadioButton Name="SobelVerRadio">Poziomy Sobel</RadioButton>
-                    <RadioButton Name="SobelHorRadio">Pionowy Sobel</RadioButton>
+                    <RadioButton Name="PrewittHorRadio">Poziomy Prewitt</RadioButton>
+                    <RadioButton Name="PrewittVerRadio">Pionowy Prewitt</RadioButton>
+                    <RadioButton Name="SobelHorRadio">Poziomy Sobel</RadioButton>
+                    <RadioButton Name="SobelVerRadio">Pionowy Sobel</RadioButton>
                     <RadioButton Name="LaplaceRadio">Laplace</RadioButton>
                     <RadioButton Name="CornerDetectRadio">Wykrywanie narożników</RadioButton>
                     <RadioButton Name="CustomRadio" IsChecked="True">Własna ramka</RadioButton>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -224,7 +224,7 @@ namespace Biometrix
             int pixelSum = CalculateWeightedSumOfPixel(ref neighbours, ref frame, offset);
             int weightSum = CalculateSumOfWeight(ref frame);
 
-            return (byte)(pixelSum/weightSum);
+            return (byte)Math.Abs(pixelSum/weightSum);
         }
 
         private int CalculateWeightedSumOfPixel(ref int[,] neighbours, ref int[,] frame, int offset)

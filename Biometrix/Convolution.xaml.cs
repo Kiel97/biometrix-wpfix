@@ -175,7 +175,18 @@ namespace Biometrix
                 case FilterType.CORNER:
                     return CORNER_FRAME;
                 case FilterType.CUSTOM:
-                    return new int[3, 3];
+                    int[,] custom_frame = new int[3, 3];
+                    int result;
+                    custom_frame[0, 0] = int.TryParse(Fm1m1.Text, out result) ? result : 1;
+                    custom_frame[0, 1] = int.TryParse(F0m1.Text, out result) ? result : 1;
+                    custom_frame[0, 2] = int.TryParse(F1m1.Text, out result) ? result : 1;
+                    custom_frame[1, 0] = int.TryParse(Fm10.Text, out result) ? result : 1;
+                    custom_frame[1, 1] = int.TryParse(F00.Text, out result) ? result : 1;
+                    custom_frame[1, 2] = int.TryParse(F10.Text, out result) ? result : 1;
+                    custom_frame[2, 0] = int.TryParse(Fm11.Text, out result) ? result : 1;
+                    custom_frame[2, 1] = int.TryParse(F01.Text, out result) ? result : 1;
+                    custom_frame[2, 2] = int.TryParse(F11.Text, out result) ? result : 1;
+                    return custom_frame;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

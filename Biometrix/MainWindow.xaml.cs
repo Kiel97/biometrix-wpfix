@@ -478,9 +478,9 @@ namespace Biometrix
             Median median = new Median(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap, bytesPerPixel);
             if (median.ShowDialog() == true)
             {
-            //    modifiedPixels = median.modifiedPixels;
+                modifiedPixels = median.modifiedPixels;
 
-            //    UpdateModifiedImageSource();
+                UpdateModifiedImageSource();
             }
         }
     }

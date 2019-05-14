@@ -242,8 +242,8 @@ namespace Biometrix
         {
             int sum = 0;
 
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 3; j++)
+            for (int i = 0; i < frame.GetLength(0); i++)
+                for (int j = 0; j < frame.GetLength(1); j++)
                     sum += frame[i, j];
 
             if (sum == 0)

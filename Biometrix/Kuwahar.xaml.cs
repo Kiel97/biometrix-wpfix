@@ -85,12 +85,9 @@ namespace Biometrix
                         int[,] neighboursBottomLeft = GetSubNeighbouringPixelIndexes(ref neighbours, 0, 2, subwindowsize);
                         int[,] neighboursBottomRight = GetSubNeighbouringPixelIndexes(ref neighbours, 2, 2, subwindowsize);
 
-                        for (int colorOffset = 0; colorOffset < 3; colorOffset++)
-                        {//0 - niebieski, 1 - zielony, 2 - czerwony, 3 - alfa
-                            //byte pixelValue = GetMedianPixel(ref neighbours, colorOffset);
-                            byte pixelValue = 0;
-                            p[index + colorOffset] = pixelValue;
-                        }
+                        p[index] = CalculateKuwahar(ref neighboursTopLeft, ref neighboursTopRight, ref neighboursBottomLeft, ref neighboursBottomRight, 0);
+                        p[index + 1] = CalculateKuwahar(ref neighboursTopLeft, ref neighboursTopRight, ref neighboursBottomLeft, ref neighboursBottomRight, 1);
+                        p[index + 2] = CalculateKuwahar(ref neighboursTopLeft, ref neighboursTopRight, ref neighboursBottomLeft, ref neighboursBottomRight, 2);
                     }
 
                     p[index + 3] = pixels[index + 3];
@@ -98,6 +95,52 @@ namespace Biometrix
             }
 
             UpdatePreviewImage(p);
+        }
+
+        private byte CalculateKuwahar(ref int[,] TL, ref int[,] TR, ref int[,] BL, ref int[,] BR, int offset)
+        {
+            int meanTopLeft = CalculateMeanValue(ref TL, offset);
+            int meanTopRight = CalculateMeanValue(ref TR, offset);
+            int meanBottomLeft = CalculateMeanValue(ref BL, offset);
+            int meanBottomRight = CalculateMeanValue(ref BR, offset);
+
+            double varianceTopLeft = CalculateVarianceValue(ref TL, meanTopLeft, offset);
+            double varianceTopRight = CalculateVarianceValue(ref TR, meanTopLeft, offset);
+            double varianceBottomLeft = CalculateVarianceValue(ref BL, meanTopLeft, offset);
+            double varianceBottomRight = CalculateVarianceValue(ref BR, meanTopLeft, offset);
+
+            // Tutaj powinno być wybieranie średniej wartości dla regionu o najmniejszej wariancji
+            return (byte)Math.Abs(0);
+        }
+
+        private int CalculateMeanValue(ref int[,] neighbours, int offset)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < neighbours.GetLength(0); i++)
+            {
+                for (int j = 0; j < neighbours.GetLength(1); j++)
+                {
+                    sum += pixels[neighbours[i, j] + offset];
+                }
+            }
+
+            return sum / neighbours.Length;
+        }
+
+        private double CalculateVarianceValue(ref int[,] neighbours, int mean, int offset)
+        {
+            double sum = 0f;
+
+            for (int i = 0; i < neighbours.GetLength(0); i++)
+            {
+                for (int j = 0; j < neighbours.GetLength(1); j++)
+                {
+                    sum += Math.Pow(mean - pixels[neighbours[i, j] + offset], 2);
+                }
+            }
+
+            return sum / neighbours.Length;
         }
 
         private int[,] GetSubNeighbouringPixelIndexes(ref int[,] neighbours, int startX, int startY, int windowsize)

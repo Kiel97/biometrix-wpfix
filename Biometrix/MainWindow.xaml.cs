@@ -467,9 +467,9 @@ namespace Biometrix
             Kuwahar kuwahar = new Kuwahar(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap, bytesPerPixel);
             if (kuwahar.ShowDialog() == true)
             {
-            //    modifiedPixels = kuwahar.modifiedPixels;
+                modifiedPixels = kuwahar.modifiedPixels;
 
-            //    UpdateModifiedImageSource();
+                UpdateModifiedImageSource();
             }
         }
 

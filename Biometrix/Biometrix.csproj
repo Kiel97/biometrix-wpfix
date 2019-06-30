@@ -180,5 +180,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Example Images\pieprz_i_sol_4.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Example Images\Lenna1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

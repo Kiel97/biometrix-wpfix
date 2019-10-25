@@ -23,11 +23,15 @@
             <StackPanel>
                 <GroupBox Header="Rodzaj funkcji">
                     <StackPanel>
-                        <RadioButton Name="LogFunction" IsChecked="True">logarytmiczna</RadioButton>
+                        <RadioButton Name="AddFunction" IsChecked="True">dodawanie</RadioButton>
+                        <RadioButton Name="SubFunction" IsChecked="False">odejmowanie</RadioButton>
+                        <RadioButton Name="MulFunction" IsChecked="False">mnożenie</RadioButton>
+                        <RadioButton Name="DivFunction" IsChecked="False">dzielenie</RadioButton>
+                        <RadioButton Name="LogFunction" IsChecked="False">logarytmiczna</RadioButton>
                         <RadioButton Name="SquareFunction">kwadratowa</RadioButton>
                     </StackPanel>
                 </GroupBox>
-                <Label Name="FunctionFormulaLabel">f(x) = c * loga x + b</Label>
+                <Label Name="FunctionFormulaLabel">f(x) = x + b</Label>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

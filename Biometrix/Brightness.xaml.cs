@@ -27,6 +27,10 @@ namespace Biometrix
         int width;
         int height;
 
+        const string ADD_FORMULA = "f(x) = x + b";
+        const string SUB_FORMULA = "f(x) = x - b";
+        const string MUL_FORMULA = "f(x) = x * b";
+        const string DIV_FORMULA = "f(x) = x / b";
         const string LOG_FORMULA = "f(x) = c * loga x + b";
         const string SQUARE_FORMULA = "f(x) = ax^2 + bx + c";
 
@@ -37,6 +41,10 @@ namespace Biometrix
 
             LogFunction.Checked += LogFunction_Checked;
             SquareFunction.Checked += SquareFunction_Checked;
+            AddFunction.Checked += AddFunction_Checked;
+            SubFunction.Checked += SubFunction_Checked;
+            MulFunction.Checked += MulFunction_Checked;
+            DivFunction.Checked += DivFunction_Checked;
 
             this.pixels = pixels;
             this.stride = stride;
@@ -80,6 +88,22 @@ namespace Biometrix
             else if (SquareFunction.IsChecked == true)
             {
                 newPixels = CalculateSquareImageBrightness(pixels);
+            }
+            else if (AddFunction.IsChecked == true)
+            {
+                newPixels = CalculateSimplePixelAddition(pixels, 'a');
+            }
+            else if (SubFunction.IsChecked == true)
+            {
+                newPixels = CalculateSimplePixelAddition(pixels, 's');
+            }
+            else if (MulFunction.IsChecked == true)
+            {
+                newPixels = CalculateSimplePixelAddition(pixels, 'm');
+            }
+            else if (DivFunction.IsChecked == true)
+            {
+                newPixels = CalculateSimplePixelAddition(pixels, 'd');
             }
 
             UpdatePreviewImage(newPixels);
@@ -144,6 +168,81 @@ namespace Biometrix
 
             return p;
         }
+        
+        private byte[] CalculateSimplePixelAddition(byte[] pixels, char type)
+        {
+            double b = (double)BSpinValue.Value;
+
+            byte[] p = new byte[pixels.Length];
+            switch (type)
+            {
+                case 'a':
+                    for (int i = 0; i < p.Length; i += 4)
+                    {
+                        p[i] = (byte)GetAddFunctionValue(b, pixels[i]);
+                        p[i + 1] = (byte)GetAddFunctionValue(b, pixels[i + 1]);
+                        p[i + 2] = (byte)GetAddFunctionValue(b, pixels[i + 2]);
+                        p[i + 3] = pixels[i + 3];
+                    }
+                    break;
+
+                case 's':
+                    for (int i = 0; i < p.Length; i += 4)
+                    {
+                        p[i] = (byte)GetSubFunctionValue(b, pixels[i]);
+                        p[i + 1] = (byte)GetSubFunctionValue(b, pixels[i + 1]);
+                        p[i + 2] = (byte)GetSubFunctionValue(b, pixels[i + 2]);
+                        p[i + 3] = pixels[i + 3];
+                    }
+                    break;
+
+                case 'm':
+                    for (int i = 0; i < p.Length; i += 4)
+                    {
+                        p[i] = (byte)GetMulFunctionValue(b, pixels[i]);
+                        p[i + 1] = (byte)GetMulFunctionValue(b, pixels[i + 1]);
+                        p[i + 2] = (byte)GetMulFunctionValue(b, pixels[i + 2]);
+                        p[i + 3] = pixels[i + 3];
+                    }
+                    break;
+                case 'd':
+                    for (int i = 0; i < p.Length; i += 4)
+                    {
+                        p[i] = (byte)GetDivFunctionValue(b, pixels[i]);
+                        p[i + 1] = (byte)GetDivFunctionValue(b, pixels[i + 1]);
+                        p[i + 2] = (byte)GetDivFunctionValue(b, pixels[i + 2]);
+                        p[i + 3] = pixels[i + 3];
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Unknown simple calculation type.");
+            }
+            return p;
+        }
+
+        private double GetAddFunctionValue(double b, byte x)
+        {
+            return x + b;
+        }
+        private double GetSubFunctionValue(double b, byte x)
+        {
+            return x - b;
+        }
+        private double GetMulFunctionValue(double b, byte x)
+        {
+            return x * b;
+        }
+        private double GetDivFunctionValue(double b, byte x)
+        {
+            try
+            {
+                return x / b;
+            }
+            catch (DivideByZeroException)
+            {
+                return x;
+            }
+        }
 
         private double GetLogFunctionValue(double a, double b, double c, byte x)
         {
@@ -163,6 +262,23 @@ namespace Biometrix
         private void SquareFunction_Checked(object sender, RoutedEventArgs e)
         {
             FunctionFormulaLabel.Content = SQUARE_FORMULA;
+        }
+
+        private void AddFunction_Checked(object sender, RoutedEventArgs e)
+        {
+            FunctionFormulaLabel.Content = ADD_FORMULA;
+        }
+        private void SubFunction_Checked(object sender, RoutedEventArgs e)
+        {
+            FunctionFormulaLabel.Content = SUB_FORMULA;
+        }
+        private void MulFunction_Checked(object sender, RoutedEventArgs e)
+        {
+            FunctionFormulaLabel.Content = MUL_FORMULA;
+        }
+        private void DivFunction_Checked(object sender, RoutedEventArgs e)
+        {
+            FunctionFormulaLabel.Content = DIV_FORMULA;
         }
     }
 }

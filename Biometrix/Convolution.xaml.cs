@@ -16,7 +16,7 @@ namespace Biometrix
 {
     public enum FilterType
     {
-        PREWITT_H, PREWITT_V, SOBEL_H, SOBEL_V, LAPLACE, SHARP, CORNER, CUSTOM
+        SMOOTH, PREWITT_H, PREWITT_V, SOBEL_H, SOBEL_V, LAPLACE, SHARP, CORNER, CUSTOM
     }
 
     public partial class Convolution : Window
@@ -76,6 +76,13 @@ namespace Biometrix
                                          {-1, -1, -1}};
 
         // 1  1  1
+        // 1  1  1
+        // 1  1  1
+        readonly int[,] SMOOTH_FRAME =  {{ 1,  1,  1},
+                                         { 1,  1,  1},
+                                         { 1,  1,  1}};
+
+        // 1  1  1
         // 1 -2 -1
         // 1 -1 -1
         readonly int[,] CORNER_FRAME = {{ 1,  1,  1},
@@ -102,6 +109,7 @@ namespace Biometrix
 
         private void ConnectEvents()
         {
+            SmoothRadio.Checked += FilterTypeRadio_Checked;
             PrewittVerRadio.Checked += FilterTypeRadio_Checked;
             PrewittHorRadio.Checked += FilterTypeRadio_Checked;
             SobelVerRadio.Checked += FilterTypeRadio_Checked;
@@ -169,7 +177,9 @@ namespace Biometrix
         private int[,] GetFrame()
         {
             switch (filterType)
-            {   
+            {
+                case FilterType.SMOOTH:
+                    return SMOOTH_FRAME;
                 case FilterType.PREWITT_H:
                     return PREWITT_HOR_FRAME;
                 case FilterType.PREWITT_V:
@@ -287,6 +297,9 @@ namespace Biometrix
 
             switch (radioButton.Name)
             {
+                case "SmoothRadio":
+                    filterType = FilterType.SMOOTH;
+                    break;
                 case "PrewittVerRadio":
                     filterType = FilterType.PREWITT_V;
                     break;

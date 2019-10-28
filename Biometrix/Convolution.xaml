@@ -21,6 +21,7 @@
         <GroupBox Grid.Column="1" Grid.Row="0" Header="Rodzaj">
             <StackPanel>
                 <StackPanel>
+                    <RadioButton Name="SmoothRadio">Wygładzający</RadioButton>
                     <RadioButton Name="PrewittHorRadio">Poziomy Prewitt</RadioButton>
                     <RadioButton Name="PrewittVerRadio">Pionowy Prewitt</RadioButton>
                     <RadioButton Name="SobelHorRadio">Poziomy Sobel</RadioButton>

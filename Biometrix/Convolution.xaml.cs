@@ -16,7 +16,7 @@ namespace Biometrix
 {
     public enum FilterType
     {
-        SMOOTH, PREWITT_H, PREWITT_V, SOBEL_H, SOBEL_V, LAPLACE, SHARP, CORNER, CUSTOM
+        SMOOTH, PREWITT_H, PREWITT_V, SOBEL_H, SOBEL_V, LAPLACE, SHARP, CORNER, GAUSS, CUSTOM
     }
 
     public partial class Convolution : Window
@@ -89,6 +89,13 @@ namespace Biometrix
                                         { 1, -2, -1},
                                         { 1, -1, -1}};
 
+        // 1  2  1
+        // 2  4  2
+        // 1  2  1
+        readonly int[,] GAUSS_FRAME = {{ 1,  2,  1},
+                                       { 2,  4,  2},
+                                       { 1,  2,  1}};
+
         public Convolution(byte[] pixels, int stride, int width, int height, WriteableBitmap modifiedBitmap, int bytesPerPixel)
         {
             InitializeComponent();
@@ -117,6 +124,7 @@ namespace Biometrix
             LaplaceRadio.Checked += FilterTypeRadio_Checked;
             SharpRadio.Checked += FilterTypeRadio_Checked;
             CornerDetectRadio.Checked += FilterTypeRadio_Checked;
+            GaussRadio.Checked += FilterTypeRadio_Checked;
             CustomRadio.Checked += FilterTypeRadio_Checked;
         }
 
@@ -194,6 +202,8 @@ namespace Biometrix
                     return SHAPR_FRAME;
                 case FilterType.CORNER:
                     return CORNER_FRAME;
+                case FilterType.GAUSS:
+                    return GAUSS_FRAME;
                 case FilterType.CUSTOM:
                     int[,] custom_frame = new int[3, 3];
                     int result;
@@ -320,6 +330,9 @@ namespace Biometrix
                     break;
                 case "CornerDetectRadio":
                     filterType = FilterType.CORNER;
+                    break;
+                case "GaussRadio":
+                    filterType = FilterType.GAUSS;
                     break;
                 case "CustomRadio":
                     filterType = FilterType.CUSTOM;

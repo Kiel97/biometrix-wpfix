@@ -29,6 +29,7 @@
                     <RadioButton Name="LaplaceRadio">Laplace</RadioButton>
                     <RadioButton Name="SharpRadio">Wyostrzający górny I</RadioButton>
                     <RadioButton Name="CornerDetectRadio">Wykrywanie narożników</RadioButton>
+                    <RadioButton Name="GaussRadio">Rozmycie Gaussa</RadioButton>
                     <RadioButton Name="CustomRadio" IsChecked="True">Własna ramka</RadioButton>
                 </StackPanel>
                 <Grid Name="CustomFrameGrid" Width="80" Height="80">

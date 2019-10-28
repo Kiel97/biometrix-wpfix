@@ -26,6 +26,7 @@
                     <RadioButton Name="SobelHorRadio">Poziomy Sobel</RadioButton>
                     <RadioButton Name="SobelVerRadio">Pionowy Sobel</RadioButton>
                     <RadioButton Name="LaplaceRadio">Laplace</RadioButton>
+                    <RadioButton Name="SharpRadio">Wyostrzający górny I</RadioButton>
                     <RadioButton Name="CornerDetectRadio">Wykrywanie narożników</RadioButton>
                     <RadioButton Name="CustomRadio" IsChecked="True">Własna ramka</RadioButton>
                 </StackPanel>

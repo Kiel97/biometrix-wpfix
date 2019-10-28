@@ -16,7 +16,7 @@ namespace Biometrix
 {
     public enum FilterType
     {
-        PREWITT_H, PREWITT_V, SOBEL_H, SOBEL_V, LAPLACE, CORNER, CUSTOM
+        PREWITT_H, PREWITT_V, SOBEL_H, SOBEL_V, LAPLACE, SHARP, CORNER, CUSTOM
     }
 
     public partial class Convolution : Window
@@ -68,6 +68,13 @@ namespace Biometrix
                                          {-1,  4, -1},
                                          { 0, -1,  0}};
 
+        //-1 -1 -1
+        //-1  9 -1
+        //-1 -1 -1
+        readonly int[,] SHAPR_FRAME =   {{-1, -1, -1},
+                                         {-1,  9, -1},
+                                         {-1, -1, -1}};
+
         // 1  1  1
         // 1 -2 -1
         // 1 -1 -1
@@ -100,6 +107,7 @@ namespace Biometrix
             SobelVerRadio.Checked += FilterTypeRadio_Checked;
             SobelHorRadio.Checked += FilterTypeRadio_Checked;
             LaplaceRadio.Checked += FilterTypeRadio_Checked;
+            SharpRadio.Checked += FilterTypeRadio_Checked;
             CornerDetectRadio.Checked += FilterTypeRadio_Checked;
             CustomRadio.Checked += FilterTypeRadio_Checked;
         }
@@ -172,6 +180,8 @@ namespace Biometrix
                     return SOBEL_VER_FRAME;
                 case FilterType.LAPLACE:
                     return LAPLACE_FRAME;
+                case FilterType.SHARP:
+                    return SHAPR_FRAME;
                 case FilterType.CORNER:
                     return CORNER_FRAME;
                 case FilterType.CUSTOM:
@@ -291,6 +301,9 @@ namespace Biometrix
                     break;
                 case "LaplaceRadio":
                     filterType = FilterType.LAPLACE;
+                    break;
+                case "SharpRadio":
+                    filterType = FilterType.SHARP;
                     break;
                 case "CornerDetectRadio":
                     filterType = FilterType.CORNER;

@@ -21,8 +21,8 @@
             <StackPanel>
                 <GroupBox Header="Rodzaj funkcji">
                     <StackPanel>
-                        <RadioButton Name="Function03" IsChecked="True">1, 1, 1</RadioButton>
-                        <RadioButton Name="Function04" IsChecked="True">1.2, 0.9, 1.2</RadioButton>
+                        <RadioButton Name="Function03" IsChecked="True">1.0, 1.0, 1.0</RadioButton>
+                        <RadioButton Name="Function04" IsChecked="True">1.6, 0.7, 0.7</RadioButton>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

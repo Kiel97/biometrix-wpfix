@@ -61,6 +61,10 @@ namespace Biometrix
             {
                 newPixels = CalculateGrayScale03(pixels);
             }
+            else if (Function04.IsChecked == true)
+            {
+                newPixels = CalculateGrayScale04(pixels);
+            }
 
             UpdatePreviewImage(newPixels);
         }
@@ -73,6 +77,23 @@ namespace Biometrix
             for (int i = 0; i < p.Length; i += 4)
             {
                 newValue = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+                p[i] = (byte)newValue;
+                p[i + 1] = (byte)newValue;
+                p[i + 2] = (byte)newValue;
+                p[i + 3] = pixels[i + 3];
+            }
+
+            return p;
+        }
+
+        private byte[] CalculateGrayScale04(byte[] pixels)
+        {
+            byte[] p = new byte[pixels.Length];
+            int newValue;
+
+            for (int i = 0; i < p.Length; i += 4)
+            {
+                newValue = (int)((pixels[i] * 1.6) + (pixels[i + 1] * 0.7) + (pixels[i + 2] * 0.7)) / 3;
                 p[i] = (byte)newValue;
                 p[i + 1] = (byte)newValue;
                 p[i + 2] = (byte)newValue;

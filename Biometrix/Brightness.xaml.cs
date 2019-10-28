@@ -45,6 +45,7 @@ namespace Biometrix
             SubFunction.Checked += SubFunction_Checked;
             MulFunction.Checked += MulFunction_Checked;
             DivFunction.Checked += DivFunction_Checked;
+            BrightnessFunction.Checked += BrightnessFunction_Checked;
 
             this.pixels = pixels;
             this.stride = stride;
@@ -105,6 +106,10 @@ namespace Biometrix
             {
                 newPixels = CalculateSimplePixelAddition(pixels, 'd');
             }
+            else if (BrightnessFunction.IsChecked == true)
+            {
+                newPixels = CalculateImageBrightness(pixels);
+            }
 
             UpdatePreviewImage(newPixels);
         }
@@ -164,6 +169,27 @@ namespace Biometrix
                 p[i+1] = (byte)GetSquareFunctionValue(a, b, c, pixels[i+1]);
                 p[i+2] = (byte)GetSquareFunctionValue(a, b, c, pixels[i+2]);
                 p[i+3] = pixels[i+3];
+            }
+
+            return p;
+        }
+
+        private byte[] CalculateImageBrightness(byte[] pixels)
+        {
+            double b = (double)BSpinValue.Value;
+
+            byte[] LUT = new byte[256];
+            for (int i = 0; i < 256; i++)
+                LUT[i] = (byte)((b + i < 0) ? 0 : (b + i > 255) ? 255 : b + i);
+
+            byte[] p = new byte[pixels.Length];
+
+            for (int i = 0; i < p.Length; i += 4)
+            {
+                p[i] = LUT[pixels[i]];
+                p[i + 1] = LUT[pixels[i+1]];
+                p[i + 2] = LUT[pixels[i+2]];
+                p[i + 3] = pixels[i + 3];
             }
 
             return p;
@@ -279,6 +305,11 @@ namespace Biometrix
         private void DivFunction_Checked(object sender, RoutedEventArgs e)
         {
             FunctionFormulaLabel.Content = DIV_FORMULA;
+        }
+
+        private void BrightnessFunction_Checked(object sender, RoutedEventArgs e)
+        {
+            FunctionFormulaLabel.Content = ADD_FORMULA;
         }
     }
 }

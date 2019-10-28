@@ -27,6 +27,7 @@
                         <RadioButton Name="SubFunction" IsChecked="False">odejmowanie</RadioButton>
                         <RadioButton Name="MulFunction" IsChecked="False">mnożenie</RadioButton>
                         <RadioButton Name="DivFunction" IsChecked="False">dzielenie</RadioButton>
+                        <RadioButton Name="BrightnessFunction" IsChecked="False">jasność</RadioButton>
                         <RadioButton Name="LogFunction" IsChecked="False">logarytmiczna</RadioButton>
                         <RadioButton Name="SquareFunction">kwadratowa</RadioButton>
                     </StackPanel>

@@ -316,50 +316,23 @@ namespace Biometrix
         {
             MessageBoxResult result = MessageBox.Show("Czy chcesz rozciągnąć histogram dla podanego obrazka?", "Rozciągnięcie histogramu", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
-                StretchHistogram(5, 253);
+            {
+                StretchHistogram();
+            }
         }
 
-        private void StretchHistogram(int a, int b)
+        private void StretchHistogram()
         {
-            if (a > b)
-                return;
-            int minRed = 255;
-            int minGreen = 255;
-            int minBlue = 255;
-            int maxRed = 0;
-            int maxGreen = 0;
-            int maxBlue = 0;
-            
             int[] redHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.RED);
             int[] greenHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.GREEN);
             int[] blueHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.BLUE);
 
-            for (int i = 0; i < 256; i++)
-            {
-                if (i >= a)
-                {
-                    if (redHistogram[i] > 0 && i < minRed)
-                        minRed = i;
-
-                    if (greenHistogram[i] > 0 && i < minGreen)
-                        minGreen = i;
-
-                    if (blueHistogram[i] > 0 && i < minBlue)
-                        minBlue = i;
-                }
-
-                if (i <= b)
-                {
-                    if (redHistogram[i] > 0 && i > maxRed)
-                        maxRed = i;
-
-                    if (greenHistogram[i] > 0 && i > maxGreen)
-                        maxGreen = i;
-
-                    if (blueHistogram[i] > 0 && i > maxBlue)
-                        maxBlue = i;
-                }
-            }
+            int minRed = HistogramCreator.GetIndexOfMinValue(redHistogram);
+            int minGreen = HistogramCreator.GetIndexOfMinValue(greenHistogram);
+            int minBlue = HistogramCreator.GetIndexOfMinValue(blueHistogram);
+            int maxRed = HistogramCreator.GetIndexOfMaxValue(redHistogram);
+            int maxGreen = HistogramCreator.GetIndexOfMaxValue(greenHistogram);
+            int maxBlue = HistogramCreator.GetIndexOfMaxValue(blueHistogram);
 
             byte[] LUTred = new byte[256];
             byte[] LUTgreen = new byte[256];
@@ -367,9 +340,9 @@ namespace Biometrix
 
             for (int i = 0; i < 256; i++)
             {
-                LUTred[i] = (byte)(255f / (maxRed - minRed) * (i/minRed));
-                LUTgreen[i] = (byte)(255f / (maxGreen - minGreen) * (i/minGreen));
-                LUTblue[i] = (byte)(255f / (maxBlue - minBlue) * (i/minBlue));
+                LUTred[i] = (byte)(255f / (maxRed - minRed) * (i-minRed));
+                LUTgreen[i] = (byte)(255f / (maxGreen - minGreen) * (i-minGreen));
+                LUTblue[i] = (byte)(255f / (maxBlue - minBlue) * (i-minBlue));
             }
 
             for (int i = 0; i < modifiedPixels.Length; i += 4)

@@ -19,7 +19,7 @@
                 <MenuItem Name="ShowHistogramMenuItem" Header="Pokaż histogram" Click="ShowHistogramMenuItem_Click" />
                 <Separator/>
                 <MenuItem Name="ChangeBrightnessMenuItem" Header="Rozjaśnij/przyciemnij" Click="ChangeBrightnessMenuItem_Click"/>
-                <MenuItem Name="StretchHistogramMenuItem"  Header="Rozciągnij" IsEnabled="False" Click="StretchHistogramMenuItem_Click"/>
+                <MenuItem Name="StretchHistogramMenuItem"  Header="Rozciągnij" Click="StretchHistogramMenuItem_Click"/>
                 <MenuItem IsEnabled="False" Header="Wyrównaj"/>
                 <Separator/>
                 <MenuItem Name="ConvertToGrayMenuItem" Header="Zamień na skalę szarości (Legacy)" Click="ConvertToGrayMenuItem_Click"/>

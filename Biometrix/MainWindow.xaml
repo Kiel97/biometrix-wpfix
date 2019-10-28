@@ -22,7 +22,8 @@
                 <MenuItem Name="StretchHistogramMenuItem"  Header="Rozciągnij" IsEnabled="False" Click="StretchHistogramMenuItem_Click"/>
                 <MenuItem IsEnabled="False" Header="Wyrównaj"/>
                 <Separator/>
-                <MenuItem Name="ConvertToGrayMenuItem" Header="Zamień na skalę szarości" Click="ConvertToGrayMenuItem_Click"/>
+                <MenuItem Name="ConvertToGrayMenuItem" Header="Zamień na skalę szarości (Legacy)" Click="ConvertToGrayMenuItem_Click"/>
+                <MenuItem Name="ConvertToGrayScaleMenuItem" Header="Zamień na skalę szarości" Click="ConvertToGrayScaleMenuItem_Click" />
                 <Separator/>
                 <MenuItem Header="Progowanie">
                     <MenuItem Name="ChangeBinarizationMenuItem" Header="Binaryzacja..." Click="ChangeBinarizationMenuItem_Click"/>

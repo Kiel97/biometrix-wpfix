@@ -92,6 +92,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GrayScale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Histogram.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +127,9 @@
     </Compile>
     <Compile Include="Convolution.xaml.cs">
       <DependentUpon>Convolution.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GrayScale.xaml.cs">
+      <DependentUpon>GrayScale.xaml</DependentUpon>
     </Compile>
     <Compile Include="Histogram.xaml.cs">
       <DependentUpon>Histogram.xaml</DependentUpon>

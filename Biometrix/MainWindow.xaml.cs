@@ -483,5 +483,16 @@ namespace Biometrix
                 UpdateModifiedImageSource();
             }
         }
+
+        private void ConvertToGrayScaleMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            GrayScale grayScale = new GrayScale(modifiedPixels, stride, (int)ModifiedImage.ActualWidth, (int)ModifiedImage.ActualHeight, modifiedBitmap);
+            if(grayScale.ShowDialog() == true)
+            {
+                modifiedPixels = grayScale.modifiedPixels;
+
+                UpdateModifiedImageSource();
+            }
+        }
     }
 }

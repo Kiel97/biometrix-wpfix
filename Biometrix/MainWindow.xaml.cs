@@ -379,6 +379,10 @@ namespace Biometrix
             int minGreen = HistogramCreator.GetIndexOfMinValue(greenHistogram);
             int minBlue = HistogramCreator.GetIndexOfMinValue(blueHistogram);
 
+            int redK = redHistogram.Count(x => x != 0);
+            int greenK = greenHistogram.Count(x => x != 0);
+            int blueK = blueHistogram.Count(x => x != 0);
+
             double[] distributionRedHistogram = new double[256];
             double[] distributionGreenHistogram = new double[256];
             double[] distributionBlueHistogram = new double[256];
@@ -395,7 +399,25 @@ namespace Biometrix
                 distributionBlueHistogram[i] = blueSum;
             }
 
-            return;
+            int[] LUTred = new int[256];
+            int[] LUTgreen = new int[256];
+            int[] LUTblue = new int[256];
+
+            for (int i = 0; i < 256; i++)
+            {
+                LUTred[i] = (int)Math.Round((distributionRedHistogram[i] - distributionRedHistogram[minRed]) / (1 - distributionRedHistogram[minRed]) * (redK - 1));
+                LUTgreen[i] = (int)Math.Round((distributionGreenHistogram[i] - distributionGreenHistogram[minGreen]) / (1 - distributionGreenHistogram[minGreen]) * (greenK - 1));
+                LUTblue[i] = (int)Math.Round((distributionBlueHistogram[i] - distributionBlueHistogram[minBlue]) / (1 - distributionBlueHistogram[minBlue]) * (blueK - 1));
+            }
+
+            for (int i = 0; i < modifiedPixels.Length; i += 4)
+            {
+                modifiedPixels[i + 2] = (byte)LUTred[modifiedPixels[i + 2]];
+                modifiedPixels[i + 1] = (byte)LUTgreen[modifiedPixels[i + 1]];
+                modifiedPixels[i] = (byte)LUTblue[modifiedPixels[i]];
+            }
+
+            UpdateModifiedImageSource();
         }
 
         private void ConvertToGrayMenuItem_Click(object sender, RoutedEventArgs e)

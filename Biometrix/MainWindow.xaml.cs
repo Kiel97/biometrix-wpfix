@@ -354,6 +354,49 @@ namespace Biometrix
 
             UpdateModifiedImageSource();
         }
+        private void EqualizeHistogramMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Czy chcesz wyrównać histogram dla podanego obrazka?", "Wyrównanie histogramu", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                EqualizeHistogram();
+            }
+        }
+
+        private void EqualizeHistogram()
+        {
+            int[] redHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.RED);
+            int[] greenHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.GREEN);
+            int[] blueHistogram = HistogramCreator.GetHistogramFromByteArray(modifiedPixels, HistogramCreator.ColorMode.BLUE);
+
+            int pixelsAmount = redHistogram.Sum();
+
+            double redSum = 0;
+            double greenSum = 0;
+            double blueSum = 0;
+
+            int minRed = HistogramCreator.GetIndexOfMinValue(redHistogram);
+            int minGreen = HistogramCreator.GetIndexOfMinValue(greenHistogram);
+            int minBlue = HistogramCreator.GetIndexOfMinValue(blueHistogram);
+
+            double[] distributionRedHistogram = new double[256];
+            double[] distributionGreenHistogram = new double[256];
+            double[] distributionBlueHistogram = new double[256];
+
+            for (int i = 0; i < 256; i++)
+            {
+                redSum += (double)redHistogram[i] / (double)pixelsAmount;
+                distributionRedHistogram[i] = redSum;
+
+                greenSum += (double)greenHistogram[i] / (double)pixelsAmount;
+                distributionGreenHistogram[i] = greenSum;
+
+                blueSum += (double)blueHistogram[i] / (double)pixelsAmount;
+                distributionBlueHistogram[i] = blueSum;
+            }
+
+            return;
+        }
 
         private void ConvertToGrayMenuItem_Click(object sender, RoutedEventArgs e)
         {

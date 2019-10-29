@@ -20,7 +20,7 @@
                 <Separator/>
                 <MenuItem Name="ChangeBrightnessMenuItem" Header="Rozjaśnij/przyciemnij" Click="ChangeBrightnessMenuItem_Click"/>
                 <MenuItem Name="StretchHistogramMenuItem"  Header="Rozciągnij" Click="StretchHistogramMenuItem_Click"/>
-                <MenuItem IsEnabled="False" Header="Wyrównaj"/>
+                <MenuItem Name="EqualizeHistogramMenuItem" Header="Wyrównaj" Click="EqualizeHistogramMenuItem_Click" />
                 <Separator/>
                 <MenuItem Name="ConvertToGrayMenuItem" Header="Zamień na skalę szarości (Legacy)" Click="ConvertToGrayMenuItem_Click"/>
                 <MenuItem Name="ConvertToGrayScaleMenuItem" Header="Zamień na skalę szarości" Click="ConvertToGrayScaleMenuItem_Click" />
